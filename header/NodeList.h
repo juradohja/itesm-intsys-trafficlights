@@ -20,6 +20,7 @@
 #include "GL/gl.h"
 #endif
 
+#define NULL nullptr
 #include "Node.h";
 
 class NodeList {

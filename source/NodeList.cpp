@@ -70,6 +70,7 @@ Node * NodeList::getNode(Node * node) {
 		}
 		cur = cur->next;
 	}
+    return NULL;
 }
 
 bool NodeList::isEmpty() {
