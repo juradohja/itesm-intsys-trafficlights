@@ -1,0 +1,7 @@
+Debug/
+lib/
+
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.dll
