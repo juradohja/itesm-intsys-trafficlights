@@ -63,14 +63,16 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "Board.h";
-#include "Agent.h";
+#include "Board.h"
+#include "Agent.h"
+#include "Environment.h"
 
 using namespace std;
 
 Board b;
 Agent * red, * green, * blue;
 Node * redList, *greenList, *blueList;
+Environment env;
 int activeAgent;
 
 void printBoard() {
@@ -149,6 +151,8 @@ void init() // FOR GLUT LOOP
 	b = Board();
 	// printBoard();
 
+	env = Environment();
+
 	int redStart;
 	do {
 		redStart = rand() % 50;
@@ -186,9 +190,10 @@ void display()							// Called for each frame (about 60 times per second).
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);				// Clear color and depth buffers.
 	glLoadIdentity();												// Reset 3D view matrix.
-	gluLookAt(25.0, 25.0, 70.0,										// Where the camera is.
-		      25.0, 25.0, 0.0,										// To where the camera points at.
+	gluLookAt(0.0, 0.0, 140.0,										// Where the camera is.
+		      0.0, 0.0, 0.0,										// To where the camera points at.
 		      0.0, 1.0, 0.0);										// "UP" vector.
+	/*
 	drawBoard(&b);
 	switch (activeAgent) {
 	case 1:
@@ -201,6 +206,8 @@ void display()							// Called for each frame (about 60 times per second).
 		drawPath(blueList, 0, 0, 1);
 		break;
 	}
+	*/
+	env.draw();
 	glutSwapBuffers();												// Swap the hidden and visible buffers.
 }
 
@@ -213,7 +220,7 @@ void reshape(int x, int y)											// Called when the window geometry changes.
 {
 	glMatrixMode(GL_PROJECTION);									// Go to 2D mode.
 	glLoadIdentity();												// Reset the 2D matrix.
-	gluPerspective(40.0, (GLdouble)x / (GLdouble)y, 0.5, 100.0);		// Configure the camera lens aperture.
+	gluPerspective(40.0, (GLdouble)x / (GLdouble)y, 0.5, 200.0);		// Configure the camera lens aperture.
 	glMatrixMode(GL_MODELVIEW);										// Go to 3D mode.
 	glViewport(0, 0, x, y);											// Configure the camera frame dimensions.
 	display();
