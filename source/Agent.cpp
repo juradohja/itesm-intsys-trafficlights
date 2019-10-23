@@ -57,7 +57,7 @@ Node * Agent::aStar() {
 		delete nbList;
 	}
 	printf("ERROR: A solution doesn't exist.\n");
-	return false;
+	return nullptr;
 }
 
 NodeList * Agent::neighbors(Node * node) {

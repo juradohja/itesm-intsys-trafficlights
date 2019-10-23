@@ -19,7 +19,7 @@
 #include "GL/freeglut.h"
 #include "GL/gl.h"
 #endif
-
+#define NULL nullptr
 class Node {
 public:
 
