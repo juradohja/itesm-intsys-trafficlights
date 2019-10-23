@@ -1,6 +1,21 @@
 #include "Environment.h"
 
-void Environment::draw() {
+Environment::Environment() {
+	board = Board();
+	board.setWalls();
+
+	frameRate = 30;
+	frame = 0;
+
+	lightNS = 2;
+	lightWE = 0;
+}
+
+Environment::~Environment() {
+
+}
+
+void Environment::drawStreetGrid() {
 	glColor3f(0.4, 0.4, 0.4);
 	glBegin(GL_QUADS); {
 		glVertex3f(-50, -10, -0.002);
@@ -42,4 +57,17 @@ void Environment::draw() {
 		}
 
 	} glEnd();
+}
+
+void Environment::draw() {
+	drawStreetGrid();
+}
+
+void Environment::update() {
+	if (frame == 30) {
+		// update functions
+	}
+	else {
+		frame++;
+	}
 }

@@ -28,7 +28,15 @@ public:
 	Board();
 	~Board();
 
-	int board[2500] = {};
+	/*
+		Estados:
+		-1 = no calle
+		0 = libre
+		1 = ocupado
+	
+	*/
 
-	void setWalls();
+	int board[10000] = {};
+
+	void setWalls(); // define espacios no calle
 };

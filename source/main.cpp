@@ -188,6 +188,7 @@ void init() // FOR GLUT LOOP
 
 void display()							// Called for each frame (about 60 times per second).
 {
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);				// Clear color and depth buffers.
 	glLoadIdentity();												// Reset 3D view matrix.
 	gluLookAt(0.0, 0.0, 140.0,										// Where the camera is.
