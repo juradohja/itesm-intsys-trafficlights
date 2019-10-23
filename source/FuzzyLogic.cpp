@@ -20,10 +20,16 @@
 #include "GL/gl.h"
 #endif
 
-#define MIN_TRAFFIC_DEN 0
-#define MAX_TRAFFIC_DEN 0
-#define MIN_EXT -2
-#define MAX_EXT 2
+#define MIN_TRAFFIC_DEN 0.0f
+#define MAX_TRAFFIC_DEN 4.0f
+#define MIN_EXT -2.0f
+#define MAX_EXT 2.0f
+
+#define EXT_RM -2.0f
+#define EXT_RL -1.0f
+#define EXT_Z 0.0f
+#define EXT_L 1.0f
+#define EXT_M 2.0f
 
 #include <array>
 using namespace std;
@@ -126,11 +132,11 @@ array<float, 5> fuzzyfyRules(array<float, 5> tda, array<float, 5> tdna) {
 
 float defuzzyfy(array<float, 5> ext) {
 	float res = 0.0f;
-	res += ext[0] * -2;
-	res += ext[1] * -1;
-	res += ext[2] * 0;
-	res += ext[3] * 1;
-	res += ext[4] * 2;
+	res += ext[0] * EXT_RM;
+	res += ext[1] * EXT_RL;
+	res += ext[2] * EXT_Z;
+	res += ext[3] * EXT_L;
+	res += ext[4] * EXT_M;
 	return res;
 }
 
