@@ -43,7 +43,7 @@ Node * Agent::aStar() {
 		cur = openList->removeHead();
 		closedList->append(cur);
 		NodeList *nbList = neighbors(cur);
-		while (!nbList->isEmpty()) {
+		while (!nbList->isEmpty()) { //segun yo con cambiar el while por un if
 			Node * neighbor = nbList->removeHead();
 			if (!closedList->isInList(neighbor)) {
 				neighbor->f = neighbor->g + diagonalDistance(neighbor);
@@ -59,6 +59,7 @@ Node * Agent::aStar() {
 				}
 			}
 		}
+		//aqui regresar el node cur o el que sigue en remove head creo para solo regresar un nodo...
 		delete nbList;
 	}
 	printf("ERROR: A solution doesn't exist.\n");
@@ -72,7 +73,7 @@ NodeList * Agent::neighbors(Node * node) {
 	
 	// TOP-LEFT
 	if (x - 1 >= 0 && y - 1 >= 0) {
-		if (board->board[(x - 1) * 50 + (y - 1)] != -1) {
+		if (board->board[(x - 1) * BOARD_SIZE + (y - 1)] == 0) {
 			Node * n0 = new Node(x - 1, y - 1, node->g + cd, node);
 			neighbors->append(n0);
 		}
@@ -80,7 +81,7 @@ NodeList * Agent::neighbors(Node * node) {
 
 	// TOP-MIDDLE
 	if (x - 1 >= 0) {
-		if (board->board[(x - 1) * 50 + (y)] != -1) {
+		if (board->board[(x - 1) * BOARD_SIZE + (y)] == 0) {
 			Node * n1 = new Node(x - 1, y, node->g + cn, node);
 			neighbors->append(n1);
 		}
@@ -88,7 +89,7 @@ NodeList * Agent::neighbors(Node * node) {
 
 	// TOP-RIGHT
 	if (x - 1 >= 0 && y + 1 < size) {
-		if (board->board[(x - 1) * 50 + (y + 1)] != -1) {
+		if (board->board[(x - 1) * BOARD_SIZE + (y + 1)] == 0) {
 			Node * n2 = new Node(x - 1, y + 1, node->g + cd, node);
 			neighbors->append(n2);
 		}
@@ -96,7 +97,7 @@ NodeList * Agent::neighbors(Node * node) {
 
 	// MIDDLE-RIGHT
 	if (y + 1 < size) {
-		if (board->board[(x) * 50 + (y + 1)] != -1) {
+		if (board->board[(x) * BOARD_SIZE + (y + 1)] == 0) {
 			Node * n3 = new Node(x, y + 1, node->g + cn, node);
 			neighbors->append(n3);
 		}
@@ -104,7 +105,7 @@ NodeList * Agent::neighbors(Node * node) {
 
 	// BOTTOM-RIGHT
 	if (x + 1 < size && y + 1 < size) {
-		if (board->board[(x + 1) * 50 + (y + 1)] != -1) {
+		if (board->board[(x + 1) * BOARD_SIZE + (y + 1)] == 0) {
 			Node * n4 = new Node(x + 1, y + 1, node->g + cd, node);
 			neighbors->append(n4);
 		}
@@ -112,7 +113,7 @@ NodeList * Agent::neighbors(Node * node) {
 
 	// BOTTOM-MIDDLE
 	if (x + 1 < size) {
-		if (board->board[(x + 1) * 50 + (y)] != -1) {
+		if (board->board[(x + 1) * BOARD_SIZE + (y)] == 0) {
 			Node * n5 = new Node(x + 1, y, node->g + cn, node);
 			neighbors->append(n5);
 		}
@@ -120,7 +121,7 @@ NodeList * Agent::neighbors(Node * node) {
 
 	// BOTTOM-LEFT
 	if (x + 1 < size && y - 1 >= 0) {
-		if (board->board[(x + 1) * 50 + (y - 1)] != -1) {
+		if (board->board[(x + 1) * BOARD_SIZE + (y - 1)] == 0) {
 			Node * n6 = new Node(x + 1, y - 1, node->g + cd, node);
 			neighbors->append(n6);
 		}
@@ -128,7 +129,7 @@ NodeList * Agent::neighbors(Node * node) {
 
 	// MIDDLE-LEFT
 	if (y - 1 >= 0) {
-		if (board->board[(x) * 50 + (y - 1)] != -1) {
+		if (board->board[(x) * BOARD_SIZE + (y - 1)] !== 0 {
 			Node * n7 = new Node(x, y - 1, node->g + cn, node);
 			neighbors->append(n7);
 		}

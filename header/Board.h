@@ -22,6 +22,7 @@
 
 #include <ctime>
 #include <cstdlib>
+#define BOARD_SIZE 100
 
 class Board {
 public:

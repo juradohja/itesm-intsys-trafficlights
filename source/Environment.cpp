@@ -86,18 +86,18 @@ void Environment::spawnCar() {
 		if(ranInt % 2 == 0) {
 			if (_board.board[ranInt] == 0) {	
 				if( ranInt2 % 2 == 0) {
-					newCar = new Agent(&_board, ranInt, ranInt2+9900, 100);
+					newCar = new Agent(&_board, ranInt, ranInt2+9900, BOARD_SIZE);
 				} else {
-					newCar = new Agent(&_board, ranInt, 100*ranInt2+99, 100);
+					newCar = new Agent(&_board, ranInt, 100*ranInt2+99, BOARD_SIZE);
 				}
 				flag = false;
 			}
 		} else {
-			if (_board.board[ranInt*100] == 0) {	
+			if (_board.board[ranInt*BOARD_SIZE] == 0) {	
 				if( ranInt2 % 2 == 0) {
-					newCar = new Agent(&_board, ranInt*100, ranInt2+9900, 100);
+					newCar = new Agent(&_board, ranInt*BOARD_SIZE, ranInt2+9900, BOARD_SIZE);
 				} else {
-					newCar = new Agent(&_board, ranInt*100, 100*ranInt2+99, 100);
+					newCar = new Agent(&_board, ranInt*BOARD_SIZE, BOARD_SIZE*ranInt2+99, BOARD_SIZE;
 				}
 				flag = false;
 			}
