@@ -36,7 +36,9 @@ public:
 	int lightWE;
 	int frameRate; // cada cuántos frames se va a updatear
 	int frame; // contador de frames
-	list<Agent> cars;
+	list<Agent *> cars;
+	int ranInt;
+	int ranInt2;
 
 	Environment();
 	~Environment();

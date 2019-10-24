@@ -1,7 +1,7 @@
 #pragma once
 #ifdef __APPLE__
 // For XCode only: New C++ terminal project. Build phases->Compile with libraries: add OpenGL and GLUT
-// Import this whole code into a new C++ file (main.cpp, for example). Then run.
+// Import this whole code into a new C++ file (main.cpp, for example). Then run.*
 // Reference: https://en.wikibooks.org/wiki/OpenGL_Programming/Installation/Mac
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>

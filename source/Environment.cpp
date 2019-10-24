@@ -9,10 +9,6 @@ Environment::Environment() {
 
 	lightNS = 2;
 	lightWE = 0;
-
-	random_device rd;
-	mt19937 rng(rd());
-	uniform_int_distribution<> uni(40,59);
 }
 
 Environment::~Environment() {
@@ -78,32 +74,36 @@ void Environment::update() {
 
 void Environment::spawnCar() {
 	bool flag = true;
-
+    random_device rd;
+    mt19937 rng(rd());
+    uniform_int_distribution<> uni(40,59);
+    Agent * newCar;
+    
 	while(flag){
 		ranInt = uni(rng); // ranInt is par starts in north, else in west
 		ranInt2 = uni(rng); // ranInt2 is par goal is south, else east
 
 		if(ranInt % 2 == 0) {
-			if (_board.board[ranInt] == 0) {	
+			if (board.board[ranInt] == 0) {
 				if( ranInt2 % 2 == 0) {
-					newCar = new Agent(&_board, ranInt, ranInt2+9900, BOARD_SIZE);
+					newCar = new Agent(&board, ranInt, ranInt2+9900, BOARD_SIZE);
 				} else {
-					newCar = new Agent(&_board, ranInt, 100*ranInt2+99, BOARD_SIZE);
+					newCar = new Agent(&board, ranInt, 100*ranInt2+99, BOARD_SIZE);
 				}
 				flag = false;
 			}
 		} else {
-			if (_board.board[ranInt*BOARD_SIZE] == 0) {	
+			if (board.board[ranInt*BOARD_SIZE] == 0) {
 				if( ranInt2 % 2 == 0) {
-					newCar = new Agent(&_board, ranInt*BOARD_SIZE, ranInt2+9900, BOARD_SIZE);
+					newCar = new Agent(&board, ranInt*BOARD_SIZE, ranInt2+9900, BOARD_SIZE);
 				} else {
-					newCar = new Agent(&_board, ranInt*BOARD_SIZE, BOARD_SIZE*ranInt2+99, BOARD_SIZE;
+					newCar = new Agent(&board, ranInt*BOARD_SIZE, BOARD_SIZE*ranInt2+99, BOARD_SIZE);
 				}
 				flag = false;
 			}
 		}
 	}
-	_cars.push_back(newCar);	
+    cars.push_back(newCar);
 	
 }
 

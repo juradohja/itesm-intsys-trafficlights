@@ -1,5 +1,4 @@
 #include "Agent.h";
-
 Agent::Agent(Board * b, int st, int gl, int sz) {
 
 	board = b;
@@ -129,7 +128,7 @@ NodeList * Agent::neighbors(Node * node) {
 
 	// MIDDLE-LEFT
 	if (y - 1 >= 0) {
-		if (board->board[(x) * BOARD_SIZE + (y - 1)] !== 0 {
+		if (board->board[(x) * BOARD_SIZE + (y - 1)] == 0) {
 			Node * n7 = new Node(x, y - 1, node->g + cn, node);
 			neighbors->append(n7);
 		}

@@ -22,6 +22,7 @@
 
 #include <algorithm>;
 #include "NodeList.h";
+#include "Node.h";
 #include "Board.h";
 
 using namespace std;
@@ -38,11 +39,11 @@ public:
 	float cn, cd;
 	
 	bool curDirectionIsEast;
-	Node curLocation;
+	Node * curLocation;
 
 	NodeList * openList;
 	NodeList * closedList;
-
+    
 	Agent(Board * b, int st, int gl, int sz);
 	~Agent();
 
