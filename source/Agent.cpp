@@ -8,10 +8,7 @@ Agent::Agent(Board * b, int st, int gl, int sz) {
 	start = new Node(st / size, st % size, 0, NULL);
 	goal = new Node(gl / size, gl % size, 0, NULL);
 
-	curLocation = new Node(st / size, st % size, 0, NULL);
-
 	//missing logic for setting the direction
-	curDirectionIsEast = true;
 
 	openList = new NodeList();
 	closedList = new NodeList();
@@ -29,6 +26,25 @@ Agent::~Agent() {
 	delete goal;
 	delete openList;
 	delete closedList;
+}
+
+Node * Agent::move(Board * b) {
+	board = b;
+	Node * newStart = aStar();
+	if (newStart != NULL) {
+		Node * parent = newStart->parent;
+		while (parent != start) {
+			newStart = parent;
+			parent = newStart->parent;
+		}
+		updateDirection(newStart);
+		delete parent;
+		newStart->parent = NULL;
+		start = newStart;
+		openList->head = start;
+		openList->tail = openList->head;
+	}
+	return start;
 }
 
 Node * Agent::aStar() {
@@ -142,4 +158,46 @@ float Agent::diagonalDistance(Node * node) {
 	float dmin = min(abs(node->x - goal->x), abs(node->y - goal->y));
 	float h = cd * dmin + cn * (dmax - dmin);
 	return h;
+}
+
+void Agent::updateDirection(Node * newSt) {
+	int dispX = newSt->x - start->x;
+	int dispY = newSt->y - start->y;
+	if (dispX == 0 && dispY == 1) {
+		curDirection = 0;	// NORTH
+	}
+	if (dispX == 1 && dispY == 1) {
+		curDirection = 1;	// NORTH-EAST
+	}
+	else if (dispX == 1 && dispY == 0) {
+		curDirection = 2;	// EAST
+	}
+	else if (dispX == 1 && dispY == -1) {
+		curDirection = 3;	// SOUTH-EAST
+	}
+	else if (dispX == 0 && dispY == -1) {
+		curDirection = 4;	// SOUTH
+	}
+	else if (dispX == -1 && dispY == -1) {
+		curDirection = 5;	// SOUTH-WEST
+	}
+	else if (dispX == -1 && dispY == 0) {
+		curDirection = 6;	// WEST
+	}
+	else if (dispX == -1 && dispY == 1) {
+		curDirection = 7;	// NORTH-WEST
+	}
+}
+
+void Agent::draw() {
+	glPushMatrix(); {
+		glTranslatef(start->x + 0.5, start->y + 0.5, 0.001);
+		glRotatef(45 * curDirection, 0, 0, 1);
+		glColor3f(0, 0, 0.8);
+		glBegin(GL_POLYGON); {
+			glVertex3f(0, 0.4, 0);
+			glVertex3f(0.25, -0.4, 0);
+			glVertex3f(-0.25, -0.4, 0);
+		} glEnd();
+	} glPopMatrix();
 }

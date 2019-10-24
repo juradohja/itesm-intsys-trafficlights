@@ -16,6 +16,18 @@ Environment::~Environment() {
 }
 
 void Environment::drawStreetGrid() {
+	glBegin(GL_LINES); {
+		glColor3f(1, 0, 0);
+		glVertex3f(0, 0, 0);
+		glVertex3f(20, 0, 0);
+
+		glColor3f(0, 1, 0);
+		glVertex3f(0, 0, 0);
+		glVertex3f(0, 20, 0);
+	} glEnd();
+
+
+
 	glColor3f(0.4, 0.4, 0.4);
 	glBegin(GL_QUADS); {
 		glVertex3f(-50, -10, -0.002);
@@ -73,6 +85,7 @@ void Environment::update() {
 }
 
 void Environment::spawnCar() {
+	
 	bool flag = true;
     random_device rd;
     mt19937 rng(rd());
