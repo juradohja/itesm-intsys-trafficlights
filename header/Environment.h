@@ -22,6 +22,7 @@
 
 #include <list>
 #include <iterator>
+#include <random>
 
 #include "Agent.h"
 #include "Board.h"
@@ -45,5 +46,6 @@ public:
 	void drawStreetGrid(); // se dibujan calles
 	void changeLights(); // cambio de estado de semáforos
 	void checkState(); // llamada a sistema FL
-	void spawnCar();
+	void spawnCar(); // crea y agrega a un coche
+	
 };

@@ -9,6 +9,10 @@ Environment::Environment() {
 
 	lightNS = 2;
 	lightWE = 0;
+
+	random_device rd;
+	mt19937 rng(rd());
+	uniform_int_distribution<> uni(40,59);
 }
 
 Environment::~Environment() {
@@ -73,5 +77,37 @@ void Environment::update() {
 }
 
 void Environment::spawnCar() {
+	bool flag = true;
+
+	while(flag){
+		ranInt = uni(rng); // ranInt is par starts in north, else in west
+		ranInt2 = uni(rng); // ranInt2 is par goal is south, else east
+
+		if(ranInt % 2 == 0) {
+			if (_board.board[ranInt] == 0) {	
+				if( ranInt2 % 2 == 0) {
+					newCar = new Agent(&_board, ranInt, ranInt2+9900, 100);
+				} else {
+					newCar = new Agent(&_board, ranInt, 100*ranInt2+99, 100);
+				}
+				flag = false;
+			}
+		} else {
+			if (_board.board[ranInt*100] == 0) {	
+				if( ranInt2 % 2 == 0) {
+					newCar = new Agent(&_board, ranInt*100, ranInt2+9900, 100);
+				} else {
+					newCar = new Agent(&_board, ranInt*100, 100*ranInt2+99, 100);
+				}
+				flag = false;
+			}
+		}
+	}
+	_cars.push_back(newCar);	
 	
 }
+
+
+
+
+
