@@ -6,40 +6,6 @@
  * TC2011. Intelligent Systems Course.
  */
 
-/*
-	Problem Formulation:
-	Initial state: Three agents in a random square on the left-most column
-		of a 50x50 board, with 500-800 walls, and a random goal square in the
-		right-most column.
-	Action: Move the agent to any adjacent square (horizontally, vertically,
-		or diagonally) that is not a wall and moves the agent closer to the
-		goal.
-	Transition Model: the agent is moved to an adjacent square that is not a
-		wall and moves the agent closer to the goal.
-	Goal Test: the agent has reached the goal through a valid route.
-	Path cost: 1 for each non-diagonal step; 1.414 for each diagonal step.
-*/
-
-/*
-	Environment:
-	Fully observable: the agent knows perfectly where the goal is and can
-		detect adjacent walls.
-	Deterministic: the next state of the environment will completely be defined
-		by the actions taken by the agents.
-	Episodic: 
-	Static: the environment doesn't change while the agent is deciding where
-		to move to.
-	Discrete: time only exists as a function of the steps taken by the agent.
-	Known: the agent has complete understanding of the consequences of its
-		actions in the environment.
-
-*/
-
-/*
-	INSTRUCTIONS: Press keys 1-3 to see the path taken by the three different
-	agents.
-*/
-
 #ifdef __APPLE__
 // For XCode only: New C++ terminal project. Build phases->Compile with libraries: add OpenGL and GLUT
 // Import this whole code into a new C++ file (main.cpp, for example). Then run.

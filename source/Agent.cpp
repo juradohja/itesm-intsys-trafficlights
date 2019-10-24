@@ -9,6 +9,11 @@ Agent::Agent(Board * b, int st, int gl, int sz) {
 	start = new Node(st / size, st % size, 0, NULL);
 	goal = new Node(gl / size, gl % size, 0, NULL);
 
+	curLocation = new Node(st / size, st % size, 0, NULL);
+
+	//missing logic for setting the direction
+	curDirectionIsEast = true;
+
 	openList = new NodeList();
 	closedList = new NodeList();
 

@@ -20,6 +20,10 @@
 #include "GL/gl.h"
 #endif
 
+#include <list>
+#include <iterator>
+
+#include "Agent.h"
 #include "Board.h"
 
 class Environment {
@@ -31,7 +35,8 @@ public:
 	int lightWE;
 	int frameRate; // cada cuántos frames se va a updatear
 	int frame; // contador de frames
-	
+	list<Agent> cars;
+
 	Environment();
 	~Environment();
 
@@ -40,5 +45,5 @@ public:
 	void drawStreetGrid(); // se dibujan calles
 	void changeLights(); // cambio de estado de semáforos
 	void checkState(); // llamada a sistema FL
-	
+	void spawnCar();
 };

@@ -36,6 +36,9 @@ public:
 	int size;
 
 	float cn, cd;
+	
+	bool curDirectionIsEast;
+	Node curLocation;
 
 	NodeList * openList;
 	NodeList * closedList;

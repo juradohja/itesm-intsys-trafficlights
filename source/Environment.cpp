@@ -71,3 +71,7 @@ void Environment::update() {
 		frame++;
 	}
 }
+
+void Environment::spawnCar() {
+	
+}
