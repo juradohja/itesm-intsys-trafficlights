@@ -32,10 +32,10 @@ Node * Agent::move(Board * b) {
 	board = b;
 	Node * newStart = aStar();
 	if (newStart != NULL) {
+        printf("ENTERDES");
 		updateDirection(newStart);
 		b->board[(start->x * 100) + start->y] = 0;
 		b->board[(newStart->x * 100) + newStart->y] = 1;
-		delete start;
 		newStart->parent = NULL;
 		start = newStart;
 		openList->head = start;
@@ -47,7 +47,7 @@ Node * Agent::move(Board * b) {
 Node * Agent::aStar() {
 	start->g = 0;
 	start->f = start->g + diagonalDistance(start);
-	while (!openList->isEmpty()) {
+	if (!openList->isEmpty()) {
 		Node * cur = openList->peekHead();
 		if (cur->x == goal->x && cur->y == goal->y) {
 			return cur;
@@ -56,8 +56,7 @@ Node * Agent::aStar() {
 		closedList->append(cur);
 		NodeList *nbList = neighbors(cur);
 		if (!nbList->isEmpty()) { //segun yo con cambiar el while por un if
-			Node * neighbor = nbList->removeHead();
-			//return neighbor;
+            Node * neighbor = nbList->removeHead();
 			
 			if (!closedList->isInList(neighbor)) {
 				neighbor->f = neighbor->g + diagonalDistance(neighbor);
@@ -72,6 +71,7 @@ Node * Agent::aStar() {
 					}
 				}
 			}
+            return neighbor;
 			
 		}
 		//aqui regresar el node cur o el que sigue en remove head creo para solo regresar un nodo...
@@ -192,7 +192,7 @@ void Agent::updateDirection(Node * newSt) {
 void Agent::draw() {
 	glPushMatrix(); {
 		glTranslatef(-50, -50, 0);
-		glTranslatef(start->x + 0.5, start->y + 0.5, 0.001);
+		glTranslatef(start->x + 0.5, start->y + 0.5, 0.003);
 		glRotatef(45 * curDirection, 0, 0, 1);
 		glColor3f(0, 0, 0.8);	
 		glBegin(GL_POLYGON); {
