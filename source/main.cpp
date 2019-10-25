@@ -37,6 +37,9 @@
 
 using namespace std;
 
+ofstream myfile;
+
+
 Board b;
 Agent * red, * green, * blue;
 Node * redList, *greenList, *blueList;
@@ -120,7 +123,13 @@ void init() // FOR GLUT LOOP
 	// printBoard();
 
 	env = Environment();
-
+    
+    printf("akjhfjk sdhfjkhdjsfhjkds hfklj dsah");
+    myfile.open("log.txt");
+    myfile << "Please writr this text to a file.\n this text is written using C++\n";
+    myfile.close();
+    printf("akjhfjk sdhfjkhdjsfhjkds hfklj dsah");
+    
 	int redStart;
 	do {
 		redStart = rand() % 50;
@@ -211,16 +220,6 @@ void changeAgent(unsigned char key, int x, int y) {
 }
 int main(int argc, char* argv[])
 {
-    ofstream myfile;
-    myfile.open("../logs.txt");
-    if (myfile.is_open())
-    {
-      myfile << "This is a line.\n";
-      myfile << "This is another line.\n";
-      myfile.close();
-    }
-    else printf ("Unable to open file");
-    
 	glutInit(&argc, argv);											// Init GLUT with command line parameters.
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);		// Use 2 buffers (hidden and visible). Use the depth buffer. Use 3 color channels.
 	glutInitWindowSize(750, 750);

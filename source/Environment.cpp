@@ -13,12 +13,6 @@ Environment::Environment() {
 	timeLeft = LIGHTBASETIME;
 	densN = 0;
 	densW = 0;
-    
-    ofstream myfile;
-    myfile.open("log.txt");
-    myfile << "Please writr this text to a file.\n this text is written using C++\n";
-    printf("WRITING!!!!\n");
-    myfile.close();
 }
 
 Environment::~Environment() {
