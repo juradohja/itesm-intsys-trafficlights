@@ -120,6 +120,13 @@ void Environment::draw() {
 	}
 }
 
+bool Environment::touchDown(Agent* value) {
+    if(value->start->x == value->goal->x && value->start->y == value->goal->y) {
+        return true;
+    }
+    return false;
+}
+
 void Environment::update() {
     if (frame == FRAMERATE){
         printf("UPDATE FUNCTION CALLED \n");
@@ -145,6 +152,16 @@ void Environment::update() {
             printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n", counter, car->start->x, car->start->y, car->goal->x, car->goal->y);
             counter++;
         }
+        list<Agent*>::iterator it = cars.begin();
+        while(it != cars.end()) {
+            if(touchDown(*it)) {
+                it = cars.erase(it);
+            } else {
+                it++;
+            }
+        }
+        
+        
 		spawnCar();
 		activeTime++;
 		timeLeft--;

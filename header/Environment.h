@@ -30,6 +30,7 @@
 #include "Board.h"
 #include "FuzzyLogic.h"
 
+
 #define FRAMERATE 150 // cada cuántos frames se va a updatear
 #define CYCLETIME 3 // cada cuántos segundos virtuales se llamará el FL system
 #define THRESHOLD 15 // threshold para tomar en cuenta densidad
@@ -56,7 +57,8 @@ public:
     
 	Environment();
 	~Environment();
-
+    
+    bool touchDown(Agent* value);
 	void draw();
 	void update();
 	void drawStreetGrid(); // se dibujan calles
