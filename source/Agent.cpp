@@ -18,7 +18,7 @@ Agent::Agent(Board * b, int st, int gl, int sz) {
 	
 	openList->head = start;
 	openList->tail = openList->head;
-
+    
 }
 
 Agent::~Agent() {
@@ -57,8 +57,8 @@ Node * Agent::aStar() {
 		NodeList *nbList = neighbors(cur);
 		if (!nbList->isEmpty()) { //segun yo con cambiar el while por un if
 			Node * neighbor = nbList->removeHead();
-			return neighbor;
-			/*
+			//return neighbor;
+			
 			if (!closedList->isInList(neighbor)) {
 				neighbor->f = neighbor->g + diagonalDistance(neighbor);
 				if (!openList->isInList(neighbor)) {
@@ -72,7 +72,7 @@ Node * Agent::aStar() {
 					}
 				}
 			}
-			*/
+			
 		}
 		//aqui regresar el node cur o el que sigue en remove head creo para solo regresar un nodo...
 		delete nbList;

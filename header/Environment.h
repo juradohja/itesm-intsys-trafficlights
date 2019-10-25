@@ -23,12 +23,14 @@
 #include <list>
 #include <iterator>
 #include <random>
+#include <fstream>
+#include <iostream>
 
 #include "Agent.h"
 #include "Board.h"
 #include "FuzzyLogic.h"
 
-#define FRAMERATE 300 // cada cuántos frames se va a updatear
+#define FRAMERATE 30 // cada cuántos frames se va a updatear
 #define CYCLETIME 3 // cada cuántos segundos virtuales se llamará el FL system
 #define THRESHOLD 15 // threshold para tomar en cuenta densidad
 #define LIGHTBASETIME 15 // tiempo base del semáforo
@@ -50,7 +52,8 @@ public:
 	float densW; // densidad west
 	float activeTime; // tiempo que lleva activo el semáforo activo
 	float timeLeft; // tiempo que le queda al semáforo
-
+    
+    
 	Environment();
 	~Environment();
 
@@ -61,4 +64,5 @@ public:
 	void checkState(); // llamada a sistema FL
 	void spawnCar(); // crea y agrega a un coche
 	void calculateTrafficDensities();
+
 };

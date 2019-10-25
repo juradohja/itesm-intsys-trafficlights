@@ -13,6 +13,12 @@ Environment::Environment() {
 	timeLeft = LIGHTBASETIME;
 	densN = 0;
 	densW = 0;
+    
+    ofstream myfile;
+    myfile.open("log.txt");
+    myfile << "Please writr this text to a file.\n this text is written using C++\n";
+    printf("WRITING!!!!");
+    myfile.close();
 }
 
 Environment::~Environment() {
@@ -107,10 +113,9 @@ void Environment::draw() {
 			glVertex3f(-10, -10, 0.001);
 		} glEnd();
 	}
-	for each (Agent * car in cars)
+	for (Agent * car : cars)
 	{
 		car->draw();
-		printf("Drawing car");
 	}
 }
 
@@ -131,8 +136,9 @@ void Environment::update() {
 				timeLeft += fuzzyfy(densW, densN);
 			}
 		}
-		for each (Agent * car in cars) {
+		for (Agent * car : cars) {
 			car->move(&board);
+            printf("Car start: sx->%d sy->%d goal: gx->%d gy->%d \n", car->start->x, car->start->y, car->goal->x, car->goal->y);
 		}
 		spawnCar();
 		activeTime++;

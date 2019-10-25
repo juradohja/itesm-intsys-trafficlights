@@ -29,6 +29,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <fstream>
+#include <iostream>
 #include "Board.h"
 #include "Agent.h"
 #include "Environment.h"
@@ -209,6 +211,16 @@ void changeAgent(unsigned char key, int x, int y) {
 }
 int main(int argc, char* argv[])
 {
+    ofstream myfile;
+    myfile.open("../logs.txt");
+    if (myfile.is_open())
+    {
+      myfile << "This is a line.\n";
+      myfile << "This is another line.\n";
+      myfile.close();
+    }
+    else printf ("Unable to open file");
+    
 	glutInit(&argc, argv);											// Init GLUT with command line parameters.
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);		// Use 2 buffers (hidden and visible). Use the depth buffer. Use 3 color channels.
 	glutInitWindowSize(750, 750);
@@ -220,5 +232,6 @@ int main(int argc, char* argv[])
 	glutDisplayFunc(display);										// Display CALLBACK function.
 	glutIdleFunc(idle);												// Idle CALLBACK function.
 	glutMainLoop();													// Begin graphics program.
+    myfile.close();
 	return 0;														// ANSI C requires a return value.
 }
