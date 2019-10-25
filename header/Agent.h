@@ -21,6 +21,7 @@
 #endif
 
 #include <algorithm>;
+#include <iostream>;
 #include "NodeList.h";
 #include "Node.h";
 #include "Board.h";

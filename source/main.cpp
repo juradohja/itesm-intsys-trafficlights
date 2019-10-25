@@ -1,7 +1,7 @@
 /*
  * A01336424 | Kai Kawasaki Ueda
  * A01336435 | Sergio Ugalde Marcano
- * A01336656 | José Alberto Jurado Hernández
+ * A01336656 | Josï¿½ Alberto Jurado Hernï¿½ndez
  *
  * TC2011. Intelligent Systems Course.
  */
@@ -122,12 +122,13 @@ void init() // FOR GLUT LOOP
 	b = Board();
 	// printBoard();
 
-	env = Environment();
-    
+
     printf("akjhfjk sdhfjkhdjsfhjkds hfklj dsah");
-    myfile.open("log.txt");
+    myfile.open("log1.txt");
+    env = Environment();
     myfile << "Please writr this text to a file.\n this text is written using C++\n";
-    myfile.close();
+    myfile << "Writing\n";
+    env.log = &myfile;
     printf("akjhfjk sdhfjkhdjsfhjkds hfklj dsah");
     
 	int redStart;

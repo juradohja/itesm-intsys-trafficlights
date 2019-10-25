@@ -1,7 +1,8 @@
 #include "Environment.h"
 
-Environment::Environment() {
+Environment::Environment()  {
 	board = Board();
+	log = nullptr;
 	board.setWalls();
 
 	frame = 0;
@@ -77,6 +78,7 @@ void Environment::drawStreetGrid() {
 
 void Environment::draw() {
     //printf("DRAWING BOARD WITH SEMAFORES AND CARS \n");
+    *log << "DRAWING BOARD WITH SEMAFORES AND CARS \n";
 	drawStreetGrid();
 	if (lightNS == 2) {
 		glBegin(GL_POLYGON); {
@@ -124,6 +126,7 @@ bool Environment::touchDown(Agent* value) {
 void Environment::update() {
     if (frame == FRAMERATE){
         printf("UPDATE FUNCTION CALLED \n");
+        *log << "DRAWING BOARD WITH SEMAFORES AND CARS \n";
 		frame = 0;
 		// update functions
 		// hay que cambiar cuando activeTime >= MAXENTENSION o cuando timeLeft <= 0
@@ -138,12 +141,15 @@ void Environment::update() {
 				timeLeft += fuzzyfy(densW, densN);
 			}
             printf("FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g \n", densN, densW, timeLeft);
+            *log << "DRAWING BOARD WITH SEMAFORES AND CARS \n";
 		}
         printf("UPDATING CARS \n");
+		*log << "UPDATING CARS";
         int counter = 0;
 		for (Agent * car : cars) {
 			car->move(&board);
             printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n", counter, car->start->x, car->start->y, car->goal->x, car->goal->y);
+            *log << "Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n";
             counter++;
         }
         list<Agent*>::iterator it = cars.begin();
@@ -165,6 +171,7 @@ void Environment::update() {
 		timeLeft--;
 		if (activeTime >= MAXEXTENSION || timeLeft <= 0) {
             printf("<==========LIGHT CHANGE==========>\n");
+            *log << "<==========LIGHT CHANGE==========>\n";
 			if (lightNS == 2) {
 				lightNS = 0;
 				lightWE = 2;
@@ -225,6 +232,7 @@ void Environment::spawnCar() {
 		counter++;
 	}
     printf("SPAWN CAR CALLED ADDED A CAR TO CARS LIST \n");
+	*log << "SPAWN CAR CALLED ADDED A CAR TO CARS LIST \n";
     cars.push_back(newCar);
 	
 }

@@ -31,18 +31,19 @@
 #include "FuzzyLogic.h"
 
 
-#define FRAMERATE 15 // cada cuántos frames se va a updatear
-#define CYCLETIME 3 // cada cuántos segundos virtuales se llamará el FL system
+#define FRAMERATE 15 // cada cuï¿½ntos frames se va a updatear
+#define CYCLETIME 3 // cada cuï¿½ntos segundos virtuales se llamarï¿½ el FL system
 #define THRESHOLD 15 // threshold para tomar en cuenta densidad
-#define LIGHTBASETIME 15 // tiempo base del semáforo
-#define MAXEXTENSION 40 // el semáforo no puede estar activo más allá de este tiempo
-#define YELLOWTIME 10 // tiempo que el semáforo estará en estado amarillo
+#define LIGHTBASETIME 15 // tiempo base del semï¿½foro
+#define MAXEXTENSION 40 // el semï¿½foro no puede estar activo mï¿½s allï¿½ de este tiempo
+#define YELLOWTIME 10 // tiempo que el semï¿½foro estarï¿½ en estado amarillo
 
 class Environment {
 public:
 
-	Board board; // tamaño 100x100, revisar detalles en Board.h
-	// estados de semáforo: 0 = rojo, 1 = amarillo, 2 = verde
+	Board board; // tamaï¿½o 100x100, revisar detalles en Board.h
+	ofstream *log;
+	// estados de semï¿½foro: 0 = rojo, 1 = amarillo, 2 = verde
 	int lightNS;
 	int lightWE;
 	int frame; // contador de frames
@@ -51,8 +52,8 @@ public:
 	int ranInt2;
 	float densN; // densidad north
 	float densW; // densidad west
-	float activeTime; // tiempo que lleva activo el semáforo activo
-	float timeLeft; // tiempo que le queda al semáforo
+	float activeTime; // tiempo que lleva activo el semï¿½foro activo
+	float timeLeft; // tiempo que le queda al semï¿½foro
     
     
 	Environment();
@@ -62,7 +63,7 @@ public:
 	void draw();
 	void update();
 	void drawStreetGrid(); // se dibujan calles
-	void changeLights(); // cambio de estado de semáforos
+	void changeLights(); // cambio de estado de semï¿½foros
 	void checkState(); // llamada a sistema FL
 	void spawnCar(); // crea y agrega a un coche
 	void calculateTrafficDensities();
