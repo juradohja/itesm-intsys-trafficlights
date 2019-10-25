@@ -31,7 +31,7 @@
 #include "FuzzyLogic.h"
 
 
-#define FRAMERATE 150 // cada cuántos frames se va a updatear
+#define FRAMERATE 15 // cada cuántos frames se va a updatear
 #define CYCLETIME 3 // cada cuántos segundos virtuales se llamará el FL system
 #define THRESHOLD 15 // threshold para tomar en cuenta densidad
 #define LIGHTBASETIME 15 // tiempo base del semáforo

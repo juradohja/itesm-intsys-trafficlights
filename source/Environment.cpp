@@ -163,6 +163,10 @@ void Environment::update() {
         
         
 		spawnCar();
+        spawnCar();
+        spawnCar();
+        spawnCar();
+        spawnCar();
 		activeTime++;
 		timeLeft--;
 		if (activeTime >= MAXEXTENSION || timeLeft <= 0) {
@@ -234,9 +238,9 @@ void Environment::spawnCar() {
 
 
 void Environment::calculateTrafficDensities() {
-	int n = THRESHOLD * 20;
-	int cn = 0; // counter north
-	int cw = 0; // counter west
+	float n = THRESHOLD * 20;
+	float cn = 0; // counter north
+	float cw = 0; // counter west
 
 	// Calculating density for west
 	for (int i = 40 - THRESHOLD; i < 40; i++) {
