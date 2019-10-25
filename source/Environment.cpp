@@ -93,24 +93,24 @@ void Environment::spawnCar() {
     Agent * newCar;
     
 	while(flag){
-		ranInt = uni(rng); // ranInt is par starts in north, else in west
+		ranInt = uni(rng); // ranInt is par starts in west, else in north
 		ranInt2 = uni(rng); // ranInt2 is par goal is south, else east
 
 		if(ranInt % 2 == 0) {
 			if (board.board[ranInt] == 0) {
 				if( ranInt2 % 2 == 0) {
-					newCar = new Agent(&board, ranInt, ranInt2+9900, BOARD_SIZE);
+					newCar = new Agent(&board, ranInt, ranInt2*100, BOARD_SIZE);
 				} else {
-					newCar = new Agent(&board, ranInt, 100*ranInt2+99, BOARD_SIZE);
+					newCar = new Agent(&board, ranInt, ranInt2+9900, BOARD_SIZE);
 				}
 				flag = false;
 			}
 		} else {
 			if (board.board[ranInt*BOARD_SIZE] == 0) {
 				if( ranInt2 % 2 == 0) {
-					newCar = new Agent(&board, ranInt*BOARD_SIZE, ranInt2+9900, BOARD_SIZE);
+					newCar = new Agent(&board, ranInt, ranInt2*100, BOARD_SIZE);
 				} else {
-					newCar = new Agent(&board, ranInt*BOARD_SIZE, BOARD_SIZE*ranInt2+99, BOARD_SIZE);
+					newCar = new Agent(&board, ranInt, ranInt2+9900, BOARD_SIZE);
 				}
 				flag = false;
 			}
