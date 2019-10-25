@@ -32,11 +32,11 @@ Node * Agent::move(Board * b) {
 	board = b;
 	Node * newStart = aStar();
 	if (newStart != NULL) {
-        printf("ENTERDES");
 		updateDirection(newStart);
 		b->board[(start->x * 100) + start->y] = 0;
 		b->board[(newStart->x * 100) + newStart->y] = 1;
 		newStart->parent = NULL;
+        printf("Current start x: %d y: %d , goal x: %d, y: %d \nNew updated Start: nx: %d, ny: %d \n", start->x, start->y, goal->x, goal->y, newStart->x, newStart->y);
 		start = newStart;
 		openList->head = start;
 		openList->tail = openList->head;

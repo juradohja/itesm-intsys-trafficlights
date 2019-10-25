@@ -17,7 +17,7 @@ Environment::Environment() {
     ofstream myfile;
     myfile.open("log.txt");
     myfile << "Please writr this text to a file.\n this text is written using C++\n";
-    printf("WRITING!!!!");
+    printf("WRITING!!!!\n");
     myfile.close();
 }
 
@@ -138,18 +138,18 @@ void Environment::update() {
 			}
             printf("FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g \n", densN, densW, timeLeft);
 		}
-        printf("UPDATING CARS");
+        printf("UPDATING CARS \n");
         int counter = 0;
 		for (Agent * car : cars) {
 			car->move(&board);
-            printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n", counter, car->start->x, car->start->y, car->goal->x, car->goal->y);
+            printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n", counter, car->start->x, car->start->y, car->goal->x, car->goal->y);
             counter++;
         }
 		spawnCar();
 		activeTime++;
 		timeLeft--;
 		if (activeTime >= MAXEXTENSION || timeLeft <= 0) {
-            printf("<==========LIGHT CHANGE==========>");
+            printf("<==========LIGHT CHANGE==========>\n");
 			if (lightNS == 2) {
 				lightNS = 0;
 				lightWE = 2;
@@ -209,7 +209,7 @@ void Environment::spawnCar() {
 
 		counter++;
 	}
-    printf("SPAWN CAR CALLED ADDED A CAR TO CARS LIST");
+    printf("SPAWN CAR CALLED ADDED A CAR TO CARS LIST \n");
     cars.push_back(newCar);
 	
 }
