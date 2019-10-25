@@ -55,7 +55,7 @@ Node * Agent::aStar() {
 		cur = openList->removeHead();
 		closedList->append(cur);
 		NodeList *nbList = neighbors(cur);
-		if (!nbList->isEmpty()) { //segun yo con cambiar el while por un if
+		while (!nbList->isEmpty()) { //segun yo con cambiar el
             Node * neighbor = nbList->removeHead();
 			
 			if (!closedList->isInList(neighbor)) {
@@ -71,9 +71,9 @@ Node * Agent::aStar() {
 					}
 				}
 			}
-            return neighbor;
-			
 		}
+        cur = openList->peekHead();
+        return cur;
 		//aqui regresar el node cur o el que sigue en remove head creo para solo regresar un nodo...
 		delete nbList;
 	}
