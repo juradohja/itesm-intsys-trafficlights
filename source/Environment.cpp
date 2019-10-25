@@ -82,6 +82,7 @@ void Environment::drawStreetGrid() {
 }
 
 void Environment::draw() {
+    //printf("DRAWING BOARD WITH SEMAFORES AND CARS \n");
 	drawStreetGrid();
 	if (lightNS == 2) {
 		glBegin(GL_POLYGON); {
@@ -120,14 +121,14 @@ void Environment::draw() {
 }
 
 void Environment::update() {
-	if (frame == FRAMERATE) {
+    if (frame == FRAMERATE){
+        printf("UPDATE FUNCTION CALLED \n");
 		frame = 0;
 		// update functions
 		// hay que cambiar cuando activeTime >= MAXENTENSION o cuando timeLeft <= 0
 		
 		// Llamada a FL System
 		if (int(activeTime) % CYCLETIME == 0) {
-			
 			calculateTrafficDensities();
 			if (lightNS == 2) { // north is active, west is non-active
 				timeLeft += fuzzyfy(densN, densW);
@@ -135,15 +136,20 @@ void Environment::update() {
 			else if (lightWE == 2) { // west is active, north is non-active
 				timeLeft += fuzzyfy(densW, densN);
 			}
+            printf("FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g \n", densN, densW, timeLeft);
 		}
+        printf("UPDATING CARS");
+        int counter = 0;
 		for (Agent * car : cars) {
 			car->move(&board);
-            printf("Car start: sx->%d sy->%d goal: gx->%d gy->%d \n", car->start->x, car->start->y, car->goal->x, car->goal->y);
-		}
+            printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n", counter, car->start->x, car->start->y, car->goal->x, car->goal->y);
+            counter++;
+        }
 		spawnCar();
 		activeTime++;
 		timeLeft--;
 		if (activeTime >= MAXEXTENSION || timeLeft <= 0) {
+            printf("<==========LIGHT CHANGE==========>");
 			if (lightNS == 2) {
 				lightNS = 0;
 				lightWE = 2;
@@ -170,7 +176,6 @@ void Environment::update() {
 }
 
 void Environment::spawnCar() {
-	
 	bool flag = true;
     random_device rd;
     mt19937 rng(rd());
@@ -204,6 +209,7 @@ void Environment::spawnCar() {
 
 		counter++;
 	}
+    printf("SPAWN CAR CALLED ADDED A CAR TO CARS LIST");
     cars.push_back(newCar);
 	
 }
