@@ -34,6 +34,7 @@ public:
 		-1 = no calle
 		0 = libre
 		1 = ocupado
+		2 = prohibido
 	
 	*/
 

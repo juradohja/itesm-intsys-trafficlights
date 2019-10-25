@@ -32,13 +32,10 @@ Node * Agent::move(Board * b) {
 	board = b;
 	Node * newStart = aStar();
 	if (newStart != NULL) {
-		Node * parent = newStart->parent;
-		while (parent != start) {
-			newStart = parent;
-			parent = newStart->parent;
-		}
 		updateDirection(newStart);
-		delete parent;
+		b->board[(start->x * 100) + start->y] = 0;
+		b->board[(newStart->x * 100) + newStart->y] = 1;
+		delete start;
 		newStart->parent = NULL;
 		start = newStart;
 		openList->head = start;
@@ -58,8 +55,10 @@ Node * Agent::aStar() {
 		cur = openList->removeHead();
 		closedList->append(cur);
 		NodeList *nbList = neighbors(cur);
-		while (!nbList->isEmpty()) { //segun yo con cambiar el while por un if
+		if (!nbList->isEmpty()) { //segun yo con cambiar el while por un if
 			Node * neighbor = nbList->removeHead();
+			return neighbor;
+			/*
 			if (!closedList->isInList(neighbor)) {
 				neighbor->f = neighbor->g + diagonalDistance(neighbor);
 				if (!openList->isInList(neighbor)) {
@@ -73,6 +72,7 @@ Node * Agent::aStar() {
 					}
 				}
 			}
+			*/
 		}
 		//aqui regresar el node cur o el que sigue en remove head creo para solo regresar un nodo...
 		delete nbList;
@@ -90,7 +90,7 @@ NodeList * Agent::neighbors(Node * node) {
 	if (x - 1 >= 0 && y - 1 >= 0) {
 		if (board->board[(x - 1) * BOARD_SIZE + (y - 1)] == 0) {
 			Node * n0 = new Node(x - 1, y - 1, node->g + cd, node);
-			neighbors->append(n0);
+			neighbors->addSorted(n0);
 		}
 	}
 
@@ -98,7 +98,7 @@ NodeList * Agent::neighbors(Node * node) {
 	if (x - 1 >= 0) {
 		if (board->board[(x - 1) * BOARD_SIZE + (y)] == 0) {
 			Node * n1 = new Node(x - 1, y, node->g + cn, node);
-			neighbors->append(n1);
+			neighbors->addSorted(n1);
 		}
 	}
 
@@ -106,7 +106,7 @@ NodeList * Agent::neighbors(Node * node) {
 	if (x - 1 >= 0 && y + 1 < size) {
 		if (board->board[(x - 1) * BOARD_SIZE + (y + 1)] == 0) {
 			Node * n2 = new Node(x - 1, y + 1, node->g + cd, node);
-			neighbors->append(n2);
+			neighbors->addSorted(n2);
 		}
 	}
 
@@ -114,7 +114,7 @@ NodeList * Agent::neighbors(Node * node) {
 	if (y + 1 < size) {
 		if (board->board[(x) * BOARD_SIZE + (y + 1)] == 0) {
 			Node * n3 = new Node(x, y + 1, node->g + cn, node);
-			neighbors->append(n3);
+			neighbors->addSorted(n3);
 		}
 	}
 
@@ -122,7 +122,7 @@ NodeList * Agent::neighbors(Node * node) {
 	if (x + 1 < size && y + 1 < size) {
 		if (board->board[(x + 1) * BOARD_SIZE + (y + 1)] == 0) {
 			Node * n4 = new Node(x + 1, y + 1, node->g + cd, node);
-			neighbors->append(n4);
+			neighbors->addSorted(n4);
 		}
 	}
 
@@ -130,7 +130,7 @@ NodeList * Agent::neighbors(Node * node) {
 	if (x + 1 < size) {
 		if (board->board[(x + 1) * BOARD_SIZE + (y)] == 0) {
 			Node * n5 = new Node(x + 1, y, node->g + cn, node);
-			neighbors->append(n5);
+			neighbors->addSorted(n5);
 		}
 	}
 
@@ -138,7 +138,7 @@ NodeList * Agent::neighbors(Node * node) {
 	if (x + 1 < size && y - 1 >= 0) {
 		if (board->board[(x + 1) * BOARD_SIZE + (y - 1)] == 0) {
 			Node * n6 = new Node(x + 1, y - 1, node->g + cd, node);
-			neighbors->append(n6);
+			neighbors->addSorted(n6);
 		}
 	}
 
@@ -146,7 +146,7 @@ NodeList * Agent::neighbors(Node * node) {
 	if (y - 1 >= 0) {
 		if (board->board[(x) * BOARD_SIZE + (y - 1)] == 0) {
 			Node * n7 = new Node(x, y - 1, node->g + cn, node);
-			neighbors->append(n7);
+			neighbors->addSorted(n7);
 		}
 	}
 
@@ -191,9 +191,10 @@ void Agent::updateDirection(Node * newSt) {
 
 void Agent::draw() {
 	glPushMatrix(); {
+		glTranslatef(-50, -50, 0);
 		glTranslatef(start->x + 0.5, start->y + 0.5, 0.001);
 		glRotatef(45 * curDirection, 0, 0, 1);
-		glColor3f(0, 0, 0.8);
+		glColor3f(0, 0, 0.8);	
 		glBegin(GL_POLYGON); {
 			glVertex3f(0, 0.4, 0);
 			glVertex3f(0.25, -0.4, 0);

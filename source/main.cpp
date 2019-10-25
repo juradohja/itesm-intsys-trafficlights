@@ -50,7 +50,7 @@ void printBoard() {
 	}
 	printf("\n");
 }
-
+/*
 void printPath(Node * head) {
 	Node * cur = head;
 	while (cur != NULL) {
@@ -106,7 +106,7 @@ void drawPath(Node * head, float r, float g, float b) {
 		cur = cur->parent;
 	}
 }
-
+*/
 void init() // FOR GLUT LOOP
 {
 	glEnable(GL_DEPTH_TEST);			// Enable check for close and far objects.
@@ -180,6 +180,7 @@ void display()							// Called for each frame (about 60 times per second).
 
 void idle()															// Called when drawing is finished.
 {
+	env.update();
 	glutPostRedisplay();											// Display again.
 }
 

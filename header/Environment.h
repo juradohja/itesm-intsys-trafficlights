@@ -26,6 +26,14 @@
 
 #include "Agent.h"
 #include "Board.h"
+#include "FuzzyLogic.h"
+
+#define FRAMERATE 300 // cada cuántos frames se va a updatear
+#define CYCLETIME 3 // cada cuántos segundos virtuales se llamará el FL system
+#define THRESHOLD 15 // threshold para tomar en cuenta densidad
+#define LIGHTBASETIME 15 // tiempo base del semáforo
+#define MAXEXTENSION 40 // el semáforo no puede estar activo más allá de este tiempo
+#define YELLOWTIME 10 // tiempo que el semáforo estará en estado amarillo
 
 class Environment {
 public:
@@ -34,11 +42,14 @@ public:
 	// estados de semáforo: 0 = rojo, 1 = amarillo, 2 = verde
 	int lightNS;
 	int lightWE;
-	int frameRate; // cada cuántos frames se va a updatear
 	int frame; // contador de frames
 	list<Agent *> cars;
 	int ranInt;
 	int ranInt2;
+	float densN; // densidad north
+	float densW; // densidad west
+	float activeTime; // tiempo que lleva activo el semáforo activo
+	float timeLeft; // tiempo que le queda al semáforo
 
 	Environment();
 	~Environment();
@@ -49,5 +60,5 @@ public:
 	void changeLights(); // cambio de estado de semáforos
 	void checkState(); // llamada a sistema FL
 	void spawnCar(); // crea y agrega a un coche
-	
+	void calculateTrafficDensities();
 };
