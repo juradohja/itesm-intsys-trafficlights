@@ -193,8 +193,8 @@ void Agent::draw() {
 	glPushMatrix(); {
 		glTranslatef(-50, -50, 0);
 		glTranslatef(start->x + 0.5, start->y + 0.5, 0.003);
-		glRotatef(45 * curDirection, 0, 0, 1);
-		glColor3f(0, 0, 0.8);	
+		glRotatef(-45 * curDirection, 0, 0, 1);
+		glColor3f(0, 0.5, 1.0);	
 		glBegin(GL_POLYGON); {
 			glVertex3f(0, 0.4, 0);
 			glVertex3f(0.25, -0.4, 0);

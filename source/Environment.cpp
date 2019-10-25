@@ -38,7 +38,7 @@ void Environment::drawStreetGrid() {
 
 
 
-	glColor3f(0.4, 0.4, 0.4);
+	glColor3f(0.2, 0.2, 0.2);
 	glBegin(GL_QUADS); {
 		glVertex3f(-50, -10, -0.002);
 		glVertex3f(50, -10, -0.002);
@@ -54,7 +54,7 @@ void Environment::drawStreetGrid() {
 	glLineWidth(0.0001);
 	glBegin(GL_LINES);
 	{
-		glColor3f(0.8,0.8,0.8);
+		glColor3f(0.5, 0.5, 0.5);
 
 		for (int i = -50; i <= 50; i++) {
 			if (-10 <= i && i <= 10) {
@@ -154,7 +154,7 @@ void Environment::update() {
 				lightNS = 0;
 				lightWE = 2;
 				for (int i = 40; i < 60; i++) {
-					board.board[(i * 100) + 40] = -1;
+					board.board[(i * 100) + 60] = -1;
 					board.board[(39 * 100) + i] = 0;
 				}
 			}
@@ -163,7 +163,7 @@ void Environment::update() {
 				lightWE = 0;
 				for (int i = 40; i < 60; i++) {
 					board.board[(39 * 100) + i] = -1;
-					board.board[(i * 100) + 40] = 0;
+					board.board[(i * 100) + 60] = 0;
 				}
 			}
 			timeLeft = LIGHTBASETIME;
