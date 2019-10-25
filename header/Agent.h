@@ -38,8 +38,7 @@ public:
 
 	float cn, cd;
 	
-	bool curDirectionIsEast;
-	Node * curLocation;
+	int curDirection;
 
 	NodeList * openList;
 	NodeList * closedList;
@@ -48,8 +47,10 @@ public:
 	~Agent();
 
 	Node * aStar();
+	Node * move(Board * b);
 	NodeList * neighbors(Node * node);
-
+	void updateDirection(Node * newSt);
+	void draw();
 	float diagonalDistance(Node * node);
 
 };
