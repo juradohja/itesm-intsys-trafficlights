@@ -140,9 +140,9 @@ void Environment::update() {
         if (int(activeTime) % CYCLETIME == 0) {
             calculateTrafficDensities();
             if (lightNS == 2) { // north is active, west is non-active
-                timeLeft += fuzzyfy(densN, densW);
+                timeLeft += fuzzyfy(densN, densW, log);
             } else if (lightWE == 2) { // west is active, north is non-active
-                timeLeft += fuzzyfy(densW, densN);
+                timeLeft += fuzzyfy(densW, densN,log);
             }
             printf("FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g \n", densN, densW, timeLeft);
             *log << "FUZZYFY CALLED with densN: " << densN << ", densW: " << densW << " timeLeft: " << timeLeft;

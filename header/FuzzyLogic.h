@@ -40,4 +40,4 @@ array<float, 5> fuzzyfyRules(array<float, 5> tda, array<float, 5> tdna);
 
 float defuzzyfy(array<float, 5> ext);
 
-float fuzzyfy(float tda, float tdna);
+float fuzzyfy(float tda, float tdna, ofstream *log);
