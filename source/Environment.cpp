@@ -125,6 +125,13 @@ bool Environment::touchDown(Agent* value) {
 
 void Environment::update() {
     if (frame == FRAMERATE){
+        spawnCar();
+        spawnCar();
+        spawnCar();
+        spawnCar();
+        spawnCar();
+        activeTime++;
+        timeLeft--;
         printf("UPDATE FUNCTION CALLED \n");
         *log << "UPDATE FUNCTION CALLED\n";
 		frame = 0;
@@ -143,15 +150,6 @@ void Environment::update() {
             printf("FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g \n", densN, densW, timeLeft);
             *log << "FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g";
 		}
-        printf("UPDATING CARS \n");
-		*log << "UPDATING CARS";
-        int counter = 0;
-		for (Agent * car : cars) {
-			car->move(&board);
-            printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n", counter, car->start->x, car->start->y, car->goal->x, car->goal->y);
-            *log << "Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n";
-            counter++;
-        }
         list<Agent*>::iterator it = cars.begin();
         while(it != cars.end()) {
             if(touchDown(*it)) {
@@ -160,15 +158,6 @@ void Environment::update() {
                 it++;
             }
         }
-        
-        
-		spawnCar();
-        spawnCar();
-        spawnCar();
-        spawnCar();
-        spawnCar();
-		activeTime++;
-		timeLeft--;
 		if (activeTime >= MAXEXTENSION || timeLeft <= 0) {
             printf("<==========LIGHT CHANGE==========>\n");
             *log << "<==========LIGHT CHANGE==========>\n";
@@ -177,20 +166,48 @@ void Environment::update() {
 				lightWE = 2;
 				for (int i = 40; i < 60; i++) {
 					board.board[(i * 100) + 60] = -1;
-					board.board[(39 * 100) + i] = 0;
+                    board.board[(i * 100) + 59] = -1;
+                    
+					board.board[(40 * 100) + i] = 0;
+                    board.board[(39 * 100) + i] = 0;
+ 
 				}
+                board.board[59 + 59] = 0;
+                board.board[60 + 59] = 0;
+                
+                board.board[40 + 39] = -1;
+                board.board[40 + 40] = -1;
 			}
 			else if (lightWE == 2) {
 				lightNS = 2;
 				lightWE = 0;
 				for (int i = 40; i < 60; i++) {
-					board.board[(39 * 100) + i] = -1;
-					board.board[(i * 100) + 60] = 0;
+					board.board[(40 * 100) + i] = -1;
+                    board.board[(39 * 100) + i] = -1;
+
+                    board.board[(i * 100) + 60] = 0;
+                    board.board[(i * 100) + 59] = 0;
 				}
+                board.board[59 + 59] = -1;
+                board.board[60 + 59] = -1;
+                
+                board.board[40 + 39] = 0;
+                board.board[40 + 40] = 0;
+                
 			}
 			timeLeft = LIGHTBASETIME;
 			activeTime = 0;
 		}
+        
+        printf("UPDATING CARS \n");
+        *log << "UPDATING CARS";
+        int counter = 0;
+        for (Agent * car : cars) {
+            car->move(&board);
+            printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n", counter, car->start->x, car->start->y, car->goal->x, car->goal->y);
+            *log << "Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n";
+            counter++;
+        }
 	}
 	else {
 		frame++;
