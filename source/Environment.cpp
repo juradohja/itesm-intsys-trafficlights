@@ -126,7 +126,7 @@ bool Environment::touchDown(Agent* value) {
 void Environment::update() {
     if (frame == FRAMERATE){
         printf("UPDATE FUNCTION CALLED \n");
-        *log << "DRAWING BOARD WITH SEMAFORES AND CARS \n";
+        *log << "UPDATE FUNCTION CALLED\n";
 		frame = 0;
 		// update functions
 		// hay que cambiar cuando activeTime >= MAXENTENSION o cuando timeLeft <= 0
@@ -141,7 +141,7 @@ void Environment::update() {
 				timeLeft += fuzzyfy(densW, densN);
 			}
             printf("FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g \n", densN, densW, timeLeft);
-            *log << "DRAWING BOARD WITH SEMAFORES AND CARS \n";
+            *log << "FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g";
 		}
         printf("UPDATING CARS \n");
 		*log << "UPDATING CARS";
