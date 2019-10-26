@@ -1,4 +1,5 @@
 #include "FuzzyLogic.h"
+#include <fstream>
 array<float, 5> fuzzyfyData(float td) {
 	array<float, 5> TDMembershipArr;
 	for (int i = 0; i < 5; ++i) {
@@ -105,15 +106,19 @@ float defuzzyfy(array<float, 5> ext) {
 	return res;
 }
 
-float fuzzyfy(float tda, float tdna) {
+float fuzzyfy(float tda, float tdna, ofstream *log) {
 	array<float, 5> TDAMembershipArr = fuzzyfyData(tda);
 	array<float, 5> TDNAMembershipArr = fuzzyfyData(tdna);
 	array<float, 5> EXTMembershipArr = fuzzyfyRules(TDAMembershipArr,TDNAMembershipArr);
 	float result = defuzzyfy(EXTMembershipArr);
     printf("FUZZY SYS ARRS: \n TDA[LA: %g, LMA: %g, MA: %g, MHA: %g, HA:%g] \n",TDAMembershipArr[0],TDAMembershipArr[1],TDAMembershipArr[2],TDAMembershipArr[3],TDAMembershipArr[4]);
+   *log << "FUZZY SYS ARRS: TDA[LA: "<<TDAMembershipArr[0]<<" , LMA: "<<TDAMembershipArr[1]<<" , MA: "<<TDAMembershipArr[0]<<" , MHA: "<<TDAMembershipArr[0]<<" , HA:"<<TDAMembershipArr[0]<<" ]\n";
     printf("TDNA[LN: %g, LMN: %g, MN: %g, MHN: %g, HN:%g] \n",TDNAMembershipArr[0],TDNAMembershipArr[1],TDNAMembershipArr[2],TDNAMembershipArr[3],TDNAMembershipArr[4]);
+    *log <<"TDNA[LN: "<<TDAMembershipArr[0]<<" , LMN: "<<TDAMembershipArr[1]<<" , MN: "<<TDAMembershipArr[2]<<" , MHN: "<<TDAMembershipArr[3]<<" , HN:"<<TDAMembershipArr[4]<<" ] \n";
     printf("EXT[RM: %g, RL: %g, Z: %g, L: %g, M:%g] \n", EXTMembershipArr[0],EXTMembershipArr[1],EXTMembershipArr[2],EXTMembershipArr[3],EXTMembershipArr[4]);
+    *log << "EXT[RM: "<<TDAMembershipArr[0]<<" , RL: "<<TDAMembershipArr[1]<<" , Z: "<<TDAMembershipArr[2]<<" , L: "<<TDAMembershipArr[3]<<" , M:"<<TDAMembershipArr[4]<<" ] \n";
     printf("Extension of: %g \n", result);
+    *log << "Extension of: "<<TDAMembershipArr[0]<<"  \n";
     return result;
 }
 
