@@ -58,7 +58,7 @@ void MDP::doMDP(){
 	int inX[9] = {0,1,1,0,-1,-1,-1,0,1};
 	int inY[9] = {0,0,1,1,1,0,-1,-1,-1};
 	do {
-		std::cout << "ENTERED DO: "<< n <<endl;
+		//std::cout << "ENTERED DO: "<< n <<endl;
 		flag = false;
 		for(int x = 1; x<BOARD_SIZE_X-1; x++) {
 			for (int y = 1; y <BOARD_SIZE_Y-1; y++) {
@@ -103,70 +103,67 @@ void MDP::doMDP(){
 		}
 		n++;
 
-		std::cout << "<---------------Internal print value---------------->" << endl;
-		for (int y = BOARD_SIZE_Y-2; y > 0; y--) {
-			for (int x = 1; x < BOARD_SIZE_X-1; x++) {
-				std::cout.precision(2);
-				std::cout << valueGrid[x][y] << " ";
-			}
-			std::cout << endl; 
-		}
+		//std::cout << "<---------------Internal print value---------------->" << endl;
+		//for (int y = BOARD_SIZE_Y-2; y > 0; y--) {
+		//	for (int x = 1; x < BOARD_SIZE_X-1; x++) {
+		//		//std::cout.precision(2);
+		//		std::cout << nextRules[x][y] << " ";
+		//	}
+		//	std::cout << endl; 
+		//}
 	} //while(n < 5);
-	while(flag);
+	while(flag || !didConverge());
 }
 
 // just for code test
 int main() {
-	/*float rewardGrid[BOARD_SIZE][BOARD_SIZE];
-	int equilibrium = 80;
-	for(int i = 1; i< REAL_BOARD_SIZE; i++) {
-		for(int j = 1; j< REAL_BOARD_SIZE; j++) {
-			if(i == j) {
-				rewardGrid[i][j] = -2.0f;
-			} else if(j >= equilibrium && i >= equilibrium) {
-				rewardGrid[i][j] = -1.0f;
-			} else if (j >= i) {
-				rewardGrid[i][j] = -4.0f;
-			} else if (i > j) {
-				rewardGrid[i][j] = -3.0f;
+
+	//Para la tarea lo de poblaciones
+	float rewardGrid[BOARD_SIZE_X][BOARD_SIZE_Y];
+
+	for(int x = 1; x< BOARD_SIZE_X-1; x++) {
+		for (int y = 1; y < BOARD_SIZE_Y-1; y++) {
+			if(x == y) {
+				rewardGrid[x][y] = -0.2f; 
+			} else if (x > 10 && y > 10) {
+				rewardGrid[x][y] = -0.1f;
+			} else if (x > y) {
+				rewardGrid[x][y] = -0.4f; 
+			} else if (y > x) {
+				rewardGrid[x][y] = -0.3f;
 			}
 		}
 	}
-	rewardGrid[equilibrium][equilibrium] = 100;
-	rewardGrid[equilibrium+1][equilibrium] = 100;
-	rewardGrid[equilibrium][equilibrium+1] = 100;
-	rewardGrid[equilibrium+1][equilibrium+1] = 100;
-	rewardGrid[equilibrium-1][equilibrium] = 100;
-	rewardGrid[equilibrium][equilibrium-1] = 100;
-	rewardGrid[equilibrium-1][equilibrium-1] = 100;
 
+	rewardGrid[10][10] = 10.0f;
 
-	rewardGrid[1][1] = -200;
-	rewardGrid[1][2] = -200;
-	rewardGrid[2][1] = -200;
-	rewardGrid[2][2] = -200;
-	
-	rewardGrid[100][1] = -50;
-	rewardGrid[100][2] = -50;
-	rewardGrid[99][2] = -50;
-	rewardGrid[99][1] = -50;
+	rewardGrid[1][1] = -20.0f;
+	rewardGrid[1][15] = -5.0f;
+	rewardGrid[15][1] = -8.0f;
+	rewardGrid[15][15] = -10.0f;
 
-	rewardGrid[1][100] = -80;
-	rewardGrid[1][99] = -80;
-	rewardGrid[2][100] = -80;
-	rewardGrid[2][99] = -80;
-
-	rewardGrid[100][100] = -100;
-	rewardGrid[99][100] = -100;
-	rewardGrid[100][99] = -100;
-	rewardGrid[99][99] = -100;
-
-	for (int y = BOARD_SIZE; y >= 0; y--) {
-		for (int x = 0; x < BOARD_SIZE; x++) {
+	std::cout << "<---------------INIT REWARD GRID---------------->" << endl;
+	for (int y = BOARD_SIZE_Y -2; y > 0; y--) {
+		for (int x = 1; x < BOARD_SIZE_X -1; x++) {
 			std::cout << rewardGrid[x][y] << " ";
 		}
 		std::cout << endl; 
-	}*/
+	}
+
+	MDP * mdp = new MDP(rewardGrid,0.8);
+	mdp->doMDP();
+
+	std::cout << "<--------------------FINAL OPTIMAL RULES---------------->" << endl;
+	for (int y = BOARD_SIZE_Y-2; y > 0; y--) {
+		for (int x = 1; x < BOARD_SIZE_X-1; x++) {
+			std::cout << mdp->optimalRules[x][y] << " ";
+		}
+		std::cout << endl; 
+	}
+
+
+	/*	
+	//EJEMPLO DE TAREA EN CLASE
 
 	float rewardGrid[BOARD_SIZE_X][BOARD_SIZE_Y];
 
@@ -218,6 +215,8 @@ int main() {
 	//	}
 	//	std::cout << endl; 
 	//}
+
+	*/
 
 }
 

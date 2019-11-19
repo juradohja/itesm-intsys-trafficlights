@@ -29,7 +29,7 @@
 using namespace std;
 
 #define BOARD_SIZE_X 17
-#define BOARD_SIZE_Y 12
+#define BOARD_SIZE_Y 17
 
 class MDP {
 public:
