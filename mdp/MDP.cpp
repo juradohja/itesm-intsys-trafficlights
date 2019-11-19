@@ -1,7 +1,8 @@
 #include "MDP.h";
 MDP::MDP(float rewards[][BOARD_SIZE_Y], float gammaValue){
-	for(int x = 0; x<BOARD_SIZE_X; x++) {
-		for (int y = 0; y < BOARD_SIZE_Y; y++) {
+
+	for(int x = 1; x<BOARD_SIZE_X-1; x++) {
+		for (int y = 1; y < BOARD_SIZE_Y-1; y++) {
 			optimalRules[x][y] = -1;
 		}
 	}
@@ -12,8 +13,8 @@ MDP::MDP(float rewards[][BOARD_SIZE_Y], float gammaValue){
 		}
 	}
 
-	for(int x = 0; x<BOARD_SIZE_X; x++) {
-		for (int y = 0; y < BOARD_SIZE_Y; y++) {
+	for(int x = 1; x<BOARD_SIZE_X-1; x++) {
+		for (int y = 1; y < BOARD_SIZE_Y-1; y++) {
 			originalvalueGrid[x][y] = rewards[x][y];
 			valueGrid[x][y] = rewards[x][y];
 			nextValueGrid[x][y] = 0.0f;
@@ -26,8 +27,8 @@ MDP::MDP(float rewards[][BOARD_SIZE_Y], float gammaValue){
 MDP::~MDP(){}
 
 bool MDP::didConverge(){
-	for(int x = 0; x<BOARD_SIZE_X; x++) {
-		for (int y = 0; y <BOARD_SIZE_Y; y++) {
+	for(int x = 1; x<BOARD_SIZE_X-1; x++) {
+		for (int y = 1; y <BOARD_SIZE_Y-1; y++) {
 			if(nextRules[x][y] != optimalRules[x][y]){
 				return false;
 			}
@@ -38,7 +39,7 @@ bool MDP::didConverge(){
 
 void MDP::doMDP(){
 	std::cout << "DO MDP!"<<endl;
-	int move;
+	int move = 0;
 	int n = 0;
 	int l;
 	float probability = 0.0f;
@@ -61,7 +62,6 @@ void MDP::doMDP(){
 		flag = false;
 		for(int x = 1; x<BOARD_SIZE_X-1; x++) {
 			for (int y = 1; y <BOARD_SIZE_Y-1; y++) {
-				move = 0; //move that has to be updated to new grid
 				for(int k = 0; k<9; k++) {
 
 					for(l = 0; l<9; l++) {
@@ -71,7 +71,7 @@ void MDP::doMDP(){
 						} else {
 							probability = 0.014f;
 						}
-						calculateValue += probability * valueGrid[x+inX[l]][y+inY[l]];
+						calculateValue += (probability * valueGrid[x+inX[l]][y+inY[l]]);
 					}
 
 					if(calculateValue > currentMax) {
@@ -86,6 +86,7 @@ void MDP::doMDP(){
 				nextRules[x][y] = move;
 				//std::cout << "for i: "<< i <<" j: "<< j<< " new value: "<<nextValueGrid[i][j] << " new move: "<< nextRules[i][j] << endl; 
 				calculateValue = 0.0f;
+				move = 0; //move that has to be updated to new grid
 				currentMax = -std::numeric_limits<float>::max();
 			}
 		}
@@ -103,8 +104,8 @@ void MDP::doMDP(){
 		n++;
 
 		std::cout << "<---------------Internal print value---------------->" << endl;
-		for (int y = BOARD_SIZE_Y -1; y > 0; y--) {
-			for (int x = 1; x < BOARD_SIZE_X -1; x++) {
+		for (int y = BOARD_SIZE_Y-2; y > 0; y--) {
+			for (int x = 1; x < BOARD_SIZE_X-1; x++) {
 				std::cout.precision(2);
 				std::cout << valueGrid[x][y] << " ";
 			}
@@ -193,7 +194,7 @@ int main() {
 	rewardGrid[15][10] = 20.0f;
 
 	std::cout << "<---------------INIT REWARD GRID---------------->" << endl;
-	for (int y = BOARD_SIZE_Y -1; y > 0; y--) {
+	for (int y = BOARD_SIZE_Y -2; y > 0; y--) {
 		for (int x = 1; x < BOARD_SIZE_X -1; x++) {
 			std::cout << rewardGrid[x][y] << " ";
 		}
@@ -204,7 +205,7 @@ int main() {
 	mdp->doMDP();
 
 	std::cout << "<--------------------FINAL OPTIMAL RULES---------------->" << endl;
-	for (int y = BOARD_SIZE_Y-1; y > 0; y--) {
+	for (int y = BOARD_SIZE_Y-2; y > 0; y--) {
 		for (int x = 1; x < BOARD_SIZE_X-1; x++) {
 			std::cout << mdp->optimalRules[x][y] << " ";
 		}
