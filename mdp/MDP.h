@@ -28,32 +28,32 @@
 #include <limits>;
 using namespace std;
 
-#define BOARD_SIZE 102
-#define REAL_BOARD_SIZE 100
+#define BOARD_SIZE_X 17
+#define BOARD_SIZE_Y 12
 
 class MDP {
 public:
 	// Allowed moves:
 	// 0 -> Stay
-	// 1 -> Up
+	// 1 -> Right
 	// 2 -> UpRight
-	// 3 -> Right
-	// 4 -> DownRight
-	// 5 -> Down
+	// 3 -> up
+	// 4 -> UpLeft
+	// 5 -> Left
 	// 6 -> DownLeft
-	// 7 -> Left
-	// 8 -> UpLeft
+	// 7 -> Down
+	// 8 -> DownRight
 	
-	int optimalRules[BOARD_SIZE][BOARD_SIZE] = {{}};
-	int nextRules[BOARD_SIZE][BOARD_SIZE] = {{}};
+	int optimalRules[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
+	int nextRules[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
 
-	float originalvalueGrid[BOARD_SIZE][BOARD_SIZE] = {{}};
-	float valueGrid[BOARD_SIZE][BOARD_SIZE] = {{}};
-	float nextValueGrid[BOARD_SIZE][BOARD_SIZE] = {{}};
+	float originalvalueGrid[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
+	float valueGrid[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
+	float nextValueGrid[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
 
 	float gamma;
     
-	MDP(float rewards[][BOARD_SIZE], float gammaValue);
+	MDP(float rewards[][BOARD_SIZE_Y], float gammaValue);
 	~MDP();
 
 	bool didConverge();

@@ -1,22 +1,22 @@
 #include "MDP.h";
-MDP::MDP(float rewards[][BOARD_SIZE], float gammaValue){
-	for(int i = 0; i<BOARD_SIZE; i++) {
-		for (int j = 0; j < BOARD_SIZE; j++) {
-			optimalRules[i][j] = 0;
+MDP::MDP(float rewards[][BOARD_SIZE_Y], float gammaValue){
+	for(int x = 0; x<BOARD_SIZE_X; x++) {
+		for (int y = 0; y < BOARD_SIZE_Y; y++) {
+			optimalRules[x][y] = -1;
 		}
 	}
 
-	for(int i = 1; i<REAL_BOARD_SIZE; i++) {
-		for (int j = 1; j < REAL_BOARD_SIZE; j++) {
-			nextRules[i][j] = -1;
+	for(int x = 1; x<BOARD_SIZE_X-1; x++) {
+		for (int y = 1; y < BOARD_SIZE_Y-1; y++) {
+			nextRules[x][y] = -2;
 		}
 	}
 
-	for(int i = 0; i<BOARD_SIZE; i++) {
-		for (int j = 0; j < BOARD_SIZE; j++) {
-			originalvalueGrid[i][j] = rewards[i][j];
-			valueGrid[i][j] = rewards[i][j];
-			nextValueGrid[i][j] = 0.0f;
+	for(int x = 0; x<BOARD_SIZE_X; x++) {
+		for (int y = 0; y < BOARD_SIZE_Y; y++) {
+			originalvalueGrid[x][y] = rewards[x][y];
+			valueGrid[x][y] = rewards[x][y];
+			nextValueGrid[x][y] = 0.0f;
 		}
 	}
 
@@ -26,9 +26,9 @@ MDP::MDP(float rewards[][BOARD_SIZE], float gammaValue){
 MDP::~MDP(){}
 
 bool MDP::didConverge(){
-	for(int i = 0; i<BOARD_SIZE; i++) {
-		for (int j = 0; j <BOARD_SIZE; j++) {
-			if(nextRules[i][j] != optimalRules[i][j]){
+	for(int x = 0; x<BOARD_SIZE_X; x++) {
+		for (int y = 0; y <BOARD_SIZE_Y; y++) {
+			if(nextRules[x][y] != optimalRules[x][y]){
 				return false;
 			}
 		}
@@ -44,23 +44,34 @@ void MDP::doMDP(){
 	float probability = 0.0f;
 	float calculateValue = 0.0f;
 	float currentMax = -std::numeric_limits<float>::max();
+	bool flag;
+	// 0 -> Stay
+	// 1 -> Right
+	// 2 -> UpRight
+	// 3 -> up
+	// 4 -> UpLeft
+	// 5 -> Left
+	// 6 -> DownLeft
+	// 7 -> Down
+	// 8 -> DownRight
 	int inX[9] = {0,1,1,0,-1,-1,-1,0,1};
-	int inY[9] = {0,0,-1,-1,-1,0,1,1,1};
+	int inY[9] = {0,0,1,1,1,0,-1,-1,-1};
 	do {
 		std::cout << "ENTERED DO: "<< n <<endl;
-		for(int i = 1; i<REAL_BOARD_SIZE; i++) {
-			for (int j = 1; j <REAL_BOARD_SIZE; j++) {
+		flag = false;
+		for(int x = 1; x<BOARD_SIZE_X-1; x++) {
+			for (int y = 1; y <BOARD_SIZE_Y-1; y++) {
 				move = 0; //move that has to be updated to new grid
-				for(int k = 1; k<9; k++) {
+				for(int k = 0; k<9; k++) {
 
-					for(l = 1; l<9; l++) {
+					for(l = 0; l<9; l++) {
 						// change probability value
 						if(l == k) {
 							probability = 0.9f;
 						} else {
 							probability = 0.014f;
 						}
-						calculateValue += probability * valueGrid[i+inX[l]][j+inY[l]];
+						calculateValue += probability * valueGrid[x+inX[l]][y+inY[l]];
 					}
 
 					if(calculateValue > currentMax) {
@@ -69,10 +80,10 @@ void MDP::doMDP(){
 						move = k;
 					}
 					calculateValue = 0.0f;
-					
+
 				}
-				nextValueGrid[i][j] = originalvalueGrid[i][j]+currentMax*gamma;
-				nextRules[i][j] = move;
+				nextValueGrid[x][y] = originalvalueGrid[x][y]+currentMax*gamma;
+				nextRules[x][y] = move;
 				//std::cout << "for i: "<< i <<" j: "<< j<< " new value: "<<nextValueGrid[i][j] << " new move: "<< nextRules[i][j] << endl; 
 				calculateValue = 0.0f;
 				currentMax = -std::numeric_limits<float>::max();
@@ -80,40 +91,32 @@ void MDP::doMDP(){
 		}
 
 		//update values of grid
-		for(int i = 1; i< BOARD_SIZE; i++) {
-			for (int j = 1; j < BOARD_SIZE; j++) {
-				valueGrid[i][j] = nextValueGrid[i][j];
-				optimalRules[i][j] = nextRules[i][j];
+		for(int x = 1; x< BOARD_SIZE_X-1; x++) {
+			for (int y = 1; y < BOARD_SIZE_Y-1; y++) {
+				valueGrid[x][y] = nextValueGrid[x][y];
+				if (optimalRules[x][y] != nextRules[x][y]) {
+					flag = true;
+				}
+				optimalRules[x][y] = nextRules[x][y];
 			}
 		}
+		n++;
 
-		//n++;
-		//for (int i = 1; i < BOARD_SIZE-1; i++) { 
-		//   for (int j = 1; j < BOARD_SIZE-1; j++) { 
-		//      std::cout << optimalRules[i][j] << " "; 
-		//   } 
-		//     
-		//   std::cout << endl; 
-		//}
-		//std::cout << endl;
-		//std::cout << endl; 
-		//std::cout << endl;
-		//for (int i = 1; i < BOARD_SIZE-1; i++) { 
-		//   for (int j = 1; j < BOARD_SIZE-1; j++) { 
-		//      std::cout << valueGrid[i][j] << " "; 
-		//   } 
-		//     
-		//   std::cout << endl; 
-		//}
-
-
+		std::cout << "<---------------Internal print value---------------->" << endl;
+		for (int y = BOARD_SIZE_Y -1; y > 0; y--) {
+			for (int x = 1; x < BOARD_SIZE_X -1; x++) {
+				std::cout.precision(2);
+				std::cout << valueGrid[x][y] << " ";
+			}
+			std::cout << endl; 
+		}
 	} //while(n < 5);
-	while(!didConverge());
+	while(flag);
 }
 
 // just for code test
 int main() {
-	float rewardGrid[BOARD_SIZE][BOARD_SIZE];
+	/*float rewardGrid[BOARD_SIZE][BOARD_SIZE];
 	int equilibrium = 80;
 	for(int i = 1; i< REAL_BOARD_SIZE; i++) {
 		for(int j = 1; j< REAL_BOARD_SIZE; j++) {
@@ -157,28 +160,64 @@ int main() {
 	rewardGrid[100][99] = -100;
 	rewardGrid[99][99] = -100;
 
-	//for (int i = 1; i < BOARD_SIZE-1; i++) { 
-	//   for (int j = 1; j < BOARD_SIZE-1; j++) { 
-	//      std::cout << rewardGrid[i][j] << " "; 
-	//   } 
-	//     
-	//   std::cout << endl; 
-	//}
-	//std::cout << endl;
-	//std::cout << endl;
-	//std::cout << endl;
-	//std::cout << endl;
-	//std::cout << endl;
+	for (int y = BOARD_SIZE; y >= 0; y--) {
+		for (int x = 0; x < BOARD_SIZE; x++) {
+			std::cout << rewardGrid[x][y] << " ";
+		}
+		std::cout << endl; 
+	}*/
+
+	float rewardGrid[BOARD_SIZE_X][BOARD_SIZE_Y];
+
+	for(int x = 1; x< BOARD_SIZE_X-1; x++) {
+		for (int y = 1; y < BOARD_SIZE_Y-1; y++) {
+			rewardGrid[x][y] = -0.04f;
+		}
+	}
+
+	rewardGrid[3][1] = -10.0f;
+	rewardGrid[3][3] = -10.0f;
+	rewardGrid[3][5] = -10.0f;
+	rewardGrid[3][7] = -10.0f;
+	rewardGrid[3][9] = -10.0f;
+	rewardGrid[6][2] = -10.0f;
+	rewardGrid[6][4] = -10.0f;
+	rewardGrid[6][6] = -10.0f;
+	rewardGrid[6][8] = -10.0f;
+	rewardGrid[6][10] = -10.0f;
+	rewardGrid[6][6] = -10.0f;
+	rewardGrid[10][1] = 10.0f;
+	rewardGrid[10][5] = -10.0f;
+	rewardGrid[10][7] = -10.0f;
+	rewardGrid[10][9] = -10.0f;
+	rewardGrid[15][10] = 20.0f;
+
+	std::cout << "<---------------INIT REWARD GRID---------------->" << endl;
+	for (int y = BOARD_SIZE_Y -1; y > 0; y--) {
+		for (int x = 1; x < BOARD_SIZE_X -1; x++) {
+			std::cout << rewardGrid[x][y] << " ";
+		}
+		std::cout << endl; 
+	}
 
 	MDP * mdp = new MDP(rewardGrid,0.8);
 	mdp->doMDP();
 
-	for (int i = 1; i < BOARD_SIZE-1; i++) { 
-	   for (int j = 1; j < BOARD_SIZE-1; j++) { 
-	      std::cout << mdp->nextRules[i][j] << " "; 
-	   } 
-	   std::cout << endl; 
+	std::cout << "<--------------------FINAL OPTIMAL RULES---------------->" << endl;
+	for (int y = BOARD_SIZE_Y-1; y > 0; y--) {
+		for (int x = 1; x < BOARD_SIZE_X-1; x++) {
+			std::cout << mdp->optimalRules[x][y] << " ";
+		}
+		std::cout << endl; 
 	}
+
+	//for (int y = BOARD_SIZE; y >= 0; y--) {
+	//	for (int x = 0; x < BOARD_SIZE; x++) {
+	//		std::cout << mdp->optimalRules[x][y] << " ";
+	//	}
+	//	std::cout << endl; 
+	//}
+
 }
 
 
