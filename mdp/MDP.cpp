@@ -125,7 +125,7 @@ int main() {
 		for (int y = 1; y < BOARD_SIZE_Y-1; y++) {
 			if(x == y) {
 				rewardGrid[x][y] = -0.2f; 
-			} else if (x > 10 && y > 10) {
+			} else if (x >= 10 && y >= 10) {
 				rewardGrid[x][y] = -0.1f;
 			} else if (x > y) {
 				rewardGrid[x][y] = -0.4f; 
@@ -136,6 +136,15 @@ int main() {
 	}
 
 	rewardGrid[10][10] = 10.0f;
+	//rewardGrid[9][10] = 10.0f;
+	//rewardGrid[10][9] = 10.0f;
+	//rewardGrid[9][9] = 10.0f;
+	//rewardGrid[11][11] = 10.0f;
+	//rewardGrid[11][10] = 10.0f;
+	//rewardGrid[10][11] = 10.0f;
+	//rewardGrid[11][9] = 10.0f;
+	//rewardGrid[9][11] = 10.0f;
+
 
 	rewardGrid[1][1] = -20.0f;
 	rewardGrid[1][15] = -5.0f;
