@@ -39,6 +39,7 @@ public:
 	*/
 
 	int board[10000] = {};
+	float reward[BOARD_SIZE + 2][BOARD_SIZE + 2];
 
 	void setWalls(); // define espacios no calle
 };

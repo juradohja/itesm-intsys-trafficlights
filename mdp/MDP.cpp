@@ -116,6 +116,7 @@ void MDP::doMDP(){
 }
 
 // just for code test
+/*
 int main() {
 
 	//Para la tarea lo de poblaciones
@@ -226,11 +227,11 @@ int main() {
 	//	std::cout << endl; 
 	//}
 
-	*/
+	
 
 }
 
-
+*/
 
 
 
