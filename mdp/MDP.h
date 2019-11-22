@@ -28,8 +28,8 @@
 #include <limits>;
 using namespace std;
 // +2 in both sizes to have a wall of 0 that wont affect the mdp process but helps to just compute 8 directions in all cells
-#define BOARD_SIZE_X 17
-#define BOARD_SIZE_Y 17
+#define BOARD_SIZE_X 102
+#define BOARD_SIZE_Y 102
 
 class MDP {
 public:

@@ -115,11 +115,16 @@ void MDP::doMDP(){
 	while(flag || !didConverge());
 }
 
-// just for code test
+
 /*
+// just for code test
+
 int main() {
 
+
+	/*
 	//Para la tarea lo de poblaciones
+	//Cambiar board size x y y a 17 en caso de uso
 	float rewardGrid[BOARD_SIZE_X][BOARD_SIZE_Y];
 
 	for(int x = 1; x< BOARD_SIZE_X-1; x++) {
@@ -137,15 +142,6 @@ int main() {
 	}
 
 	rewardGrid[10][10] = 10.0f;
-	//rewardGrid[9][10] = 10.0f;
-	//rewardGrid[10][9] = 10.0f;
-	//rewardGrid[9][9] = 10.0f;
-	//rewardGrid[11][11] = 10.0f;
-	//rewardGrid[11][10] = 10.0f;
-	//rewardGrid[10][11] = 10.0f;
-	//rewardGrid[11][9] = 10.0f;
-	//rewardGrid[9][11] = 10.0f;
-
 
 	rewardGrid[1][1] = -20.0f;
 	rewardGrid[1][15] = -5.0f;
@@ -170,10 +166,11 @@ int main() {
 		}
 		std::cout << endl; 
 	}
+	*/
 
 	
 
-	/*	
+	/*
 	//EJEMPLO DE TAREA EN CLASE
 
 	float rewardGrid[BOARD_SIZE_X][BOARD_SIZE_Y];
@@ -219,21 +216,10 @@ int main() {
 		}
 		std::cout << endl; 
 	}
-
-	//for (int y = BOARD_SIZE; y >= 0; y--) {
-	//	for (int x = 0; x < BOARD_SIZE; x++) {
-	//		std::cout << mdp->optimalRules[x][y] << " ";
-	//	}
-	//	std::cout << endl; 
-	//}
-
 	
 
 }
-
 */
-
-
 
 
 
