@@ -32,9 +32,9 @@ using namespace std;
 #define BOARD_SIZE_X 102
 #define BOARD_SIZE_Y 102
 
-#define WALL_REWARD -100.0f
+#define WALL_REWARD -10.0f
 #define WHITE_SPACE_REWARD -0.0002f
-#define SIDEWALK_REWARD -10.0f
+#define SIDEWALK_REWARD -2.0f
 #define GOAL_REWARD 1000.0f
 
 class MDP {
@@ -53,13 +53,13 @@ public:
 	int optimalRules[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
 	int nextRules[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
 
-	float originalvalueGrid[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
-	float valueGrid[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
-	float nextValueGrid[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
+	double originalvalueGrid[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
+	double valueGrid[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
+	double nextValueGrid[BOARD_SIZE_X][BOARD_SIZE_Y] = {{}};
 
-	float gamma;
+	double gamma;
     
-	MDP(float rewards[][BOARD_SIZE_Y], float gammaValue);
+	MDP(double rewards[][BOARD_SIZE_Y], double gammaValue);
 	~MDP();
 
 	bool didConverge();
