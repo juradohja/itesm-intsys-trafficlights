@@ -237,8 +237,16 @@ void Environment::draw() {
 }
 
 bool Environment::touchDown(Agent *value) {
-    if (value->start->x == value->goal->x && value->start->y == value->goal->y) {
-        return true;
+    if (value->goal->x == 99) {
+        //goal is in east
+        if(value->start->x == 99) {
+            return true;
+        }
+    } else if(value->goal->y == 0) {
+        //goal is in south
+        if(value->start->y == 0) {
+            return true;
+        }
     }
     return false;
 }
@@ -348,18 +356,18 @@ void Environment::spawnCar() {
         if (ranInt % 2 == 0) {
             if (board.board[ranInt] == 0) {
                 if (ranInt2 % 2 == 0) {
-                    newCar = new Agent(&board, ranInt, ranInt2 * 100, BOARD_SIZE);
+                    newCar = new Agent(&board, ranInt, ranInt2 * 100, BOARD_SIZE); //start in west and goal in south
                 } else {
-                    newCar = new Agent(&board, ranInt, ranInt2 + 9900, BOARD_SIZE);
+                    newCar = new Agent(&board, ranInt, ranInt2 + 9900, BOARD_SIZE); // start in west and goal in east
                 }
                 flag = false;
             }
         } else {
             if (board.board[ranInt * BOARD_SIZE + 99] == 0) {
                 if (ranInt2 % 2 == 0) {
-                    newCar = new Agent(&board, ranInt * BOARD_SIZE + 99, ranInt2 * 100, BOARD_SIZE);
+                    newCar = new Agent(&board, ranInt * BOARD_SIZE + 99, ranInt2 * 100, BOARD_SIZE); // start in north and goal in south
                 } else {
-                    newCar = new Agent(&board, ranInt * BOARD_SIZE + 99, ranInt2 + 9900, BOARD_SIZE);
+                    newCar = new Agent(&board, ranInt * BOARD_SIZE + 99, ranInt2 + 9900, BOARD_SIZE); // start in north and goal in east
                 }
                 flag = false;
             }
@@ -370,9 +378,7 @@ void Environment::spawnCar() {
     printf("SPAWN CAR CALLED ADDED A CAR TO CARS LIST \n");
     *log << "SPAWN CAR CALLED ADDED A CAR TO CARS LIST \n";
     cars.push_back(newCar);
-
 }
-
 
 void Environment::calculateTrafficDensities() {
     float n = THRESHOLD * 20;
@@ -399,6 +405,3 @@ void Environment::calculateTrafficDensities() {
     }
     densN = cn / n;
 }
-
-
-

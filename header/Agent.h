@@ -40,18 +40,14 @@ public:
 	float cn, cd;
 	
 	int curDirection;
-
-	NodeList * openList;
-	NodeList * closedList;
     
 	Agent(Board * b, int st, int gl, int sz);
 	~Agent();
-
-	Node * aStar();
+    
+    Node * getNextPossibleNode(int moveInt);
+    Node * nextMove();
 	Node * move(Board * b);
-	NodeList * neighbors(Node * node);
 	void updateDirection(Node * newSt);
 	void draw();
-	float diagonalDistance(Node * node);
 
 };

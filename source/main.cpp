@@ -131,6 +131,7 @@ void init() // FOR GLUT LOOP
     env.log = &myfile;
     printf("akjhfjk sdhfjkhdjsfhjkds hfklj dsah");
     
+    /*
 	int redStart;
 	do {
 		redStart = rand() % 50;
@@ -160,6 +161,7 @@ void init() // FOR GLUT LOOP
 	blueList = blue->aStar();
 
 	activeAgent = 1;
+     */
 
 	// printPath(redList);
 }

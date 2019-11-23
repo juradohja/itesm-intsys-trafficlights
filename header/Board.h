@@ -39,7 +39,7 @@ public:
 	int board[10000] = {};
 
 	void setWalls(); // define espacios no calle
-
+    //std::string moveDict[9] = {"Stay","Right","UpRight","Up","UpLeft","Left","DownLeft","Down","DownRight"};
 	/*
 		Movimientos:
 		0 -> Stay
