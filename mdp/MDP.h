@@ -36,6 +36,7 @@ using namespace std;
 #define WHITE_SPACE_REWARD -0.0002f
 #define SIDEWALK_REWARD -2.0f
 #define GOAL_REWARD 1000.0f
+#define GAMMA_VALUE 0.9f
 
 class MDP {
 public:

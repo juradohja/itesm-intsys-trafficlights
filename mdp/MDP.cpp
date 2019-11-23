@@ -132,12 +132,11 @@ void MDP::doMDP(){
 }
 
 
-/*
 // just for code test
 
 int main() {
 
-	/*	
+		
 	//OFITIAL FOR PROYECT
 	double rewards[BOARD_SIZE_X][BOARD_SIZE_Y];
 
@@ -151,7 +150,7 @@ int main() {
 			} else if((x>= 47 && x <= 54) &&
 				(y>= 47 && y <= 54)) {
 				rewards[x][y] = WALL_REWARD; //wall glorieta -20.0f
-			} else if (x == 100) { //x == 100 for east and y == 1 for south
+			} else if (x==100) { //x == 100 for east and y == 1 for south
 				rewards[x][y] = GOAL_REWARD; //goals 10.0f
 			} else if((x < 43 && y < 43) ||
 			(x >= 59 && y < 43) ||
@@ -223,7 +222,7 @@ int main() {
 	rewards[55][4] = WALL_REWARD;
 	rewards[55][5] = WALL_REWARD;
 
-	MDP * mdp = new MDP(rewards,0.9f);
+	MDP * mdp = new MDP(rewards,GAMMA_VALUE);
 	mdp->doMDP();
 
 	std::cout << "<--------------------FINAL OPTIMAL RULES---------------->" << endl;
@@ -240,12 +239,8 @@ int main() {
 			std::cout << endl;
 		}
 	}
-	 
-	
-
 }
 
-*/
 
 
 

@@ -2,6 +2,7 @@
 
 Board::Board() {
 	setWalls();
+	
 }
 
 Board::~Board(){}
@@ -18,5 +19,4 @@ void Board::setWalls() {
 			board[i] = -1;
 		}
 	}
-
 }
