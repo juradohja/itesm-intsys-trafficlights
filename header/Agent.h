@@ -36,7 +36,9 @@ public:
 	Node * start;
 	Node * goal;
 	int size;
-
+    int inX[8] = {1,1,0,-1,-1,-1,0,1};
+    int inY[8] = {0,1,1,1,0,-1,-1,-1};
+    
 	float cn, cd, isMoving;
 	
 	int curDirection;

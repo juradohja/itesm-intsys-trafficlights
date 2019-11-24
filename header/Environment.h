@@ -55,7 +55,6 @@ public:
 	float activeTime; // tiempo que lleva activo el sem�foro activo
 	float timeLeft; // tiempo que le queda al sem�foro
     
-    
 	Environment();
 	~Environment();
     

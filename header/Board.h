@@ -31,9 +31,10 @@ public:
 
 	/*
 		Estados:
+        -2 = semaforo
 		-1 = no calle
 		0 = libre
-		1 = ocupado
+		1 = ocupado por coche
 		2 = prohibido
 	*/
 	int board[10000] = {};

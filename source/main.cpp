@@ -34,6 +34,7 @@
 #include "Board.h"
 #include "Agent.h"
 #include "Environment.h"
+#include <string>
 
 using namespace std;
 
@@ -45,6 +46,14 @@ Agent * red, * green, * blue;
 Node * redList, *greenList, *blueList;
 Environment env;
 int activeAgent;
+
+long frames;
+long times;
+long timebase;
+float fps;
+char bufferFPS[11];
+
+void displayText(int x, int y, char* txt);
 
 void printBoard() {
 	for (int i = 0; i < 50; i++) {
@@ -118,7 +127,11 @@ void init() // FOR GLUT LOOP
 	glClearColor(0.0, 0.0, 0.0, 0.0);	// Clear the color state.
 	glMatrixMode(GL_MODELVIEW);			// Go to 3D mode.
 	glLoadIdentity();					// Reset 3D view matrix.
-
+    frames = 0;
+    times = 0;
+    timebase = 0;
+    fps = 0.0f;
+    
 	b = Board();
 	// printBoard();
 
@@ -188,12 +201,43 @@ void display()							// Called for each frame (about 60 times per second).
 		break;
 	}
 	*/
+    displayText(30,50,bufferFPS);
+    string remainingTime = "Remaining Semaphore Time: "+to_string(env.timeLeft);
+    char remainingTimeChar[remainingTime.size()+1];
+    remainingTime.copy(remainingTimeChar, remainingTime.size()+1);
+    remainingTimeChar[remainingTime.size()] = '\0';
+    displayText(30,70, remainingTimeChar);
+    
+    string tdn = "TDN: "+ to_string(env.densN);
+    char tdnChar[tdn.size()+1];
+    tdn.copy(tdnChar,tdn.size()+1);
+    tdnChar[tdn.size()] = '\0';
+    displayText(30,90,tdnChar);
+    string tde = "TDN: "+ to_string(env.densW);
+    char tdeChar[tde.size()+1];
+    tde.copy(tdeChar,tde.size()+1);
+    tdeChar[tde.size()] = '\0';
+    displayText(30,110,tdeChar);
+    string tc = "Total car #: "+ to_string(env.cars.size());
+    char tcChar[tc.size()+1];
+    tc.copy(tcChar,tc.size()+1);
+    tcChar[tc.size()] = '\0';
+    displayText(30,130,tcChar);
 	env.draw();
 	glutSwapBuffers();												// Swap the hidden and visible buffers.
 }
 
 void idle()															// Called when drawing is finished.
 {
+    frames++;
+    times = glutGet( GLUT_ELAPSED_TIME );
+    if( times - timebase > 1000 )
+    {
+        fps = frames * 1000.0f / (times - timebase);
+        sprintf( bufferFPS, "FPS:%4.2f\n", fps);
+        timebase = times;
+        frames = 0;
+    }
 	env.update();
 	glutPostRedisplay();											// Display again.
 }
@@ -237,4 +281,39 @@ int main(int argc, char* argv[])
 	glutMainLoop();													// Begin graphics program.
     myfile.close();
 	return 0;														// ANSI C requires a return value.
+}
+
+void displayText( int x, int y, char* txt )
+{
+    GLboolean lighting;
+    GLint viewportCoords[4];
+    glColor3f( 0.0, 1.0, 0.0 );
+    glGetBooleanv( GL_LIGHTING, &lighting       );
+    glGetIntegerv( GL_VIEWPORT, viewportCoords );
+    if( lighting )
+    {
+        glDisable( GL_LIGHTING );
+    }
+    glMatrixMode( GL_PROJECTION );
+    glPushMatrix();
+        glLoadIdentity();
+        gluOrtho2D( 0.0, viewportCoords[2], 0.0, viewportCoords[3] );
+        glMatrixMode( GL_MODELVIEW );
+        glPushMatrix();
+            glLoadIdentity();
+            glRasterPos2i( x, viewportCoords[3] - y );
+            while( *txt )
+            {
+                glutBitmapCharacter( GLUT_BITMAP_HELVETICA_18, *txt );
+                txt++;
+            }
+        glPopMatrix();
+        glMatrixMode( GL_PROJECTION );
+    glPopMatrix();
+    glMatrixMode( GL_MODELVIEW );
+
+    if( lighting )
+    {
+        glEnable( GL_LIGHTING );
+    }
 }

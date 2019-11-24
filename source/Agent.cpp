@@ -21,11 +21,15 @@ Agent::~Agent() {
 
 Node * Agent::move(Board * b) {
 	board = b;
-	Node * newStart = nextMove();
+    Node * newStart;
+    
+    
+    newStart  = nextMove();
+    
 	if (newStart != NULL) {
 		updateDirection(newStart);
 		b->board[(start->x * BOARD_SIZE) + start->y] = 0;
-		b->board[(newStart->x * BOARD_SIZE) + newStart->y] = -1;
+		b->board[(newStart->x * BOARD_SIZE) + newStart->y] = 1;
 		newStart->parent = NULL;
         printf("Current start x: %d y: %d , goal x: %d, y: %d \nNew updated Start: nx: %d, ny: %d \n", start->x, start->y, goal->x, goal->y, newStart->x, newStart->y);
 		start = newStart;
