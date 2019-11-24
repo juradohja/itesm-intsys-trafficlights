@@ -32,12 +32,25 @@
 #define EXT_M 2.0f
 
 #include <array>
+#include <string>
 using namespace std;
 
-array<float, 5> fuzzyfyData(float td);
+class FuzzyLogic {
+public:
+    
+    string TDAarr;
+    string TDNAarr;
+    string EXTarr;
+    
+    
+    FuzzyLogic();
+    ~FuzzyLogic();
+    
+    array<float, 5> fuzzyfyData(float td);
 
-array<float, 5> fuzzyfyRules(array<float, 5> tda, array<float, 5> tdna);
+    array<float, 5> fuzzyfyRules(array<float, 5> tda, array<float, 5> tdna);
 
-float defuzzyfy(array<float, 5> ext);
+    float defuzzyfy(array<float, 5> ext);
 
-float fuzzyfy(float tda, float tdna, ofstream *log);
+    float fuzzyfy(float tda, float tdna, ofstream *log);
+};

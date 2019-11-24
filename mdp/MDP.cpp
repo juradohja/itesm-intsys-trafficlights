@@ -129,6 +129,7 @@ void MDP::doMDP(){
 		
 	} //while(n < 5);
 	while(flag  && countConv < 5);
+    std::cout << "<--------------------NUMBER OF ITERATIONS: "<<n<<"--------------------------->" << endl;
 }
 
 
@@ -150,7 +151,7 @@ int main2() {
 			} else if((x>= 47 && x <= 54) &&
 				(y>= 47 && y <= 54)) {
 				rewards[x][y] = WALL_REWARD; //wall glorieta -20.0f
-			} else if (y==1) { //x == 100 for east and y == 1 for south
+			} else if (x==100) { //x == 100 for east and y == 1 for south
 				rewards[x][y] = GOAL_REWARD; //goals 10.0f
 			} else if((x < 43 && y < 43) ||
 			(x >= 59 && y < 43) ||

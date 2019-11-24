@@ -202,27 +202,47 @@ void display()							// Called for each frame (about 60 times per second).
 	}
 	*/
     displayText(30,50,bufferFPS);
-    string remainingTime = "Remaining Semaphore Time: "+to_string(env.timeLeft);
+    string remainingTime = " Remaining Semaphore Time: "+to_string(env.timeLeft);
     char remainingTimeChar[remainingTime.size()+1];
     remainingTime.copy(remainingTimeChar, remainingTime.size()+1);
     remainingTimeChar[remainingTime.size()] = '\0';
     displayText(30,70, remainingTimeChar);
     
-    string tdn = "TDN: "+ to_string(env.densN);
+    string tda = env.fuzzlogic.TDAarr;
+    char tdaChar[tda.size()+1];
+    tda.copy(tdaChar,tda.size()+1);
+    tdaChar[tda.size()] = '\0';
+    displayText(30,90,tdaChar);
+    
+    string tdna = env.fuzzlogic.TDNAarr;
+    char tdnaChar[tdna.size()+1];
+    tdna.copy(tdnaChar,tdna.size()+1);
+    tdnaChar[tdna.size()] = '\0';
+    displayText(30,110,tdnaChar);
+    
+    string ext = env.fuzzlogic.EXTarr;
+    char extChar[ext.size()+1];
+    ext.copy(extChar,ext.size()+1);
+    extChar[ext.size()] = '\0';
+    displayText(30,130,extChar);
+    
+    string tdn = " #cars in N: "+to_string(env.carNumN)+" TDN: "+ to_string(env.densN);
     char tdnChar[tdn.size()+1];
     tdn.copy(tdnChar,tdn.size()+1);
     tdnChar[tdn.size()] = '\0';
-    displayText(30,90,tdnChar);
-    string tde = "TDN: "+ to_string(env.densW);
+    displayText(30,150,tdnChar);
+    string tde = " #cars in W: "+to_string(env.carNumW)+" TDW: "+ to_string(env.densW);
     char tdeChar[tde.size()+1];
     tde.copy(tdeChar,tde.size()+1);
     tdeChar[tde.size()] = '\0';
-    displayText(30,110,tdeChar);
-    string tc = "Total car #: "+ to_string(env.cars.size());
+    displayText(30,170,tdeChar);
+    string tc = " Total car #: "+ to_string(env.cars.size());
     char tcChar[tc.size()+1];
     tc.copy(tcChar,tc.size()+1);
     tcChar[tc.size()] = '\0';
-    displayText(30,130,tcChar);
+    displayText(30,190,tcChar);
+    displayText(30,210," Iterations for MDP-SouthAsGoal: 350");
+    displayText(30,230," Iterations for MDP-EastAsGoal: 332");
 	env.draw();
 	glutSwapBuffers();												// Swap the hidden and visible buffers.
 }

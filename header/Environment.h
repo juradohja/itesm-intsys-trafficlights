@@ -42,6 +42,7 @@ class Environment {
 public:
 
 	Board board; // tama�o 100x100, revisar detalles en Board.h
+    FuzzyLogic fuzzlogic;
 	ofstream *log;
 	// estados de sem�foro: 0 = rojo, 1 = amarillo, 2 = verde
 	int lightNS;
@@ -52,6 +53,8 @@ public:
 	int ranInt2;
 	float densN; // densidad north
 	float densW; // densidad west
+    int carNumN;
+    int carNumW;
 	float activeTime; // tiempo que lleva activo el sem�foro activo
 	float timeLeft; // tiempo que le queda al sem�foro
     

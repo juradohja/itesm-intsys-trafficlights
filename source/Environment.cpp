@@ -2,6 +2,7 @@
 
 Environment::Environment() {
     board = Board();
+    fuzzlogic = FuzzyLogic();
     log = nullptr;
     board.setWalls();
 
@@ -14,6 +15,8 @@ Environment::Environment() {
     timeLeft = LIGHTBASETIME;
     densN = 0;
     densW = 0;
+    carNumN = 0;
+    carNumW = 0;
 }
 
 Environment::~Environment() {
@@ -256,6 +259,7 @@ void Environment::update() {
         spawnCar();
         spawnCar();
         spawnCar();
+        spawnCar();
         activeTime++;
         timeLeft--;
         printf("UPDATE FUNCTION CALLED \n");
@@ -268,9 +272,9 @@ void Environment::update() {
         if (int(activeTime) % CYCLETIME == 0) {
             calculateTrafficDensities();
             if (lightNS == 2) { // north is active, west is non-active
-                timeLeft += fuzzyfy(densN, densW, log);
+                timeLeft += fuzzlogic.fuzzyfy(densN, densW, log);
             } else if (lightWE == 2) { // west is active, north is non-active
-                timeLeft += fuzzyfy(densW, densN,log);
+                timeLeft += fuzzlogic.fuzzyfy(densW, densN,log);
             }
             printf("FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g \n", densN, densW, timeLeft);
             *log << "FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g";
@@ -402,7 +406,9 @@ void Environment::calculateTrafficDensities() {
     float n = THRESHOLD * 20;
     float cn = 0; // counter north
     float cw = 0; // counter west
-
+    int ccn = 0;
+    int ccw = 0;
+    
     // Calculating density for west
     for (int i = 40 - THRESHOLD; i < 40; i++) {
         for (int j = 40; j < 60; j++) {
@@ -411,15 +417,30 @@ void Environment::calculateTrafficDensities() {
             }
         }
     }
+    for (int i = 0; i < 40; i++) {
+        for (int j = 40; j < 60; j++) {
+            if (board.board[(i * 100) + j] == 1) {
+                ccw++;
+            }
+        }
+    }
     densW = cw / n;
-
+    carNumW = ccw;
     // Calculating density for north
-    for (int j = 40 - THRESHOLD; j < 40; j++) {
+    for (int j = 60; j < 60+THRESHOLD; j++) {
         for (int i = 40; i < 60; i++) {
             if (board.board[(i * 100) + j] == 1) {
                 cn++;
             }
         }
     }
+    for (int j = 60; j < 100; j++) {
+        for (int i = 40; i < 60; i++) {
+            if (board.board[(i * 100) + j] == 1) {
+                ccn++;
+            }
+        }
+    }
     densN = cn / n;
+    carNumN = ccn;
 }

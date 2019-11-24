@@ -1,6 +1,17 @@
 #include "FuzzyLogic.h"
 #include <fstream>
-array<float, 5> fuzzyfyData(float td) {
+
+FuzzyLogic::FuzzyLogic() {
+    TDAarr="";
+    TDNAarr="";
+    EXTarr="";
+}
+
+FuzzyLogic::~FuzzyLogic() {
+
+}
+
+array<float, 5> FuzzyLogic::fuzzyfyData(float td) {
 	array<float, 5> TDMembershipArr;
 	for (int i = 0; i < 5; ++i) {
 		TDMembershipArr[i] = 0.0f;
@@ -62,7 +73,7 @@ array<float, 5> fuzzyfyData(float td) {
 	return TDMembershipArr;
 }
 
-array<float, 5> fuzzyfyRules(array<float, 5> tda, array<float, 5> tdna) {
+array<float, 5> FuzzyLogic::fuzzyfyRules(array<float, 5> tda, array<float, 5> tdna) {
 	array<float, 5> EXTMembershipArr;
 	for (int i = 0; i < 5; ++i) {
 		EXTMembershipArr[i] = 0.0f;
@@ -96,7 +107,7 @@ array<float, 5> fuzzyfyRules(array<float, 5> tda, array<float, 5> tdna) {
 	return EXTMembershipArr;
 }
 
-float defuzzyfy(array<float, 5> ext) {
+float FuzzyLogic::defuzzyfy(array<float, 5> ext) {
 	float res = 0.0f;
 	res += ext[0] * EXT_RM;
 	res += ext[1] * EXT_RL;
@@ -106,19 +117,23 @@ float defuzzyfy(array<float, 5> ext) {
 	return res;
 }
 
-float fuzzyfy(float tda, float tdna, ofstream *log) {
+float FuzzyLogic::fuzzyfy(float tda, float tdna, ofstream *log) {
 	array<float, 5> TDAMembershipArr = fuzzyfyData(tda);
 	array<float, 5> TDNAMembershipArr = fuzzyfyData(tdna);
 	array<float, 5> EXTMembershipArr = fuzzyfyRules(TDAMembershipArr,TDNAMembershipArr);
 	float result = defuzzyfy(EXTMembershipArr);
+    TDAarr = "TDA [ LA: "+to_string(TDAMembershipArr[0])+", LMA: "+to_string(TDAMembershipArr[1])+", MA: "+to_string(TDAMembershipArr[2])+", MHA: "+to_string(TDAMembershipArr[3])+", HA: "+to_string(TDAMembershipArr[4])+" ]";
+    TDNAarr = "TDNA [ LN: "+to_string(TDNAMembershipArr[0])+", LMN: "+to_string(TDNAMembershipArr[1])+", MN: "+to_string(TDNAMembershipArr[2])+", MHN: "+to_string(TDNAMembershipArr[3])+", HN: "+to_string(TDNAMembershipArr[4])+" ]";
+    EXTarr = "EXT [ RM: "+to_string(EXTMembershipArr[0])+", RL: "+to_string(EXTMembershipArr[1])+", Z: "+to_string(EXTMembershipArr[2])+", L: "+to_string(EXTMembershipArr[3])+", M: "+to_string(EXTMembershipArr[4])+" ]";
+    
     printf("FUZZY SYS ARRS: \n TDA[LA: %g, LMA: %g, MA: %g, MHA: %g, HA:%g] \n",TDAMembershipArr[0],TDAMembershipArr[1],TDAMembershipArr[2],TDAMembershipArr[3],TDAMembershipArr[4]);
    *log << "FUZZY SYS ARRS: TDA[LA: "<<TDAMembershipArr[0]<<" , LMA: "<<TDAMembershipArr[1]<<" , MA: "<<TDAMembershipArr[0]<<" , MHA: "<<TDAMembershipArr[0]<<" , HA:"<<TDAMembershipArr[0]<<" ]\n";
     printf("TDNA[LN: %g, LMN: %g, MN: %g, MHN: %g, HN:%g] \n",TDNAMembershipArr[0],TDNAMembershipArr[1],TDNAMembershipArr[2],TDNAMembershipArr[3],TDNAMembershipArr[4]);
-    *log <<"TDNA[LN: "<<TDAMembershipArr[0]<<" , LMN: "<<TDAMembershipArr[1]<<" , MN: "<<TDAMembershipArr[2]<<" , MHN: "<<TDAMembershipArr[3]<<" , HN:"<<TDAMembershipArr[4]<<" ] \n";
+    *log <<"TDNA[LN: "<<TDNAMembershipArr[0]<<" , LMN: "<<TDNAMembershipArr[1]<<" , MN: "<<TDNAMembershipArr[2]<<" , MHN: "<<TDNAMembershipArr[3]<<" , HN:"<<TDNAMembershipArr[4]<<" ] \n";
     printf("EXT[RM: %g, RL: %g, Z: %g, L: %g, M:%g] \n", EXTMembershipArr[0],EXTMembershipArr[1],EXTMembershipArr[2],EXTMembershipArr[3],EXTMembershipArr[4]);
-    *log << "EXT[RM: "<<TDAMembershipArr[0]<<" , RL: "<<TDAMembershipArr[1]<<" , Z: "<<TDAMembershipArr[2]<<" , L: "<<TDAMembershipArr[3]<<" , M:"<<TDAMembershipArr[4]<<" ] \n";
+    *log << "EXT[RM: "<<EXTMembershipArr[0]<<" , RL: "<<EXTMembershipArr[1]<<" , Z: "<<EXTMembershipArr[2]<<" , L: "<<EXTMembershipArr[3]<<" , M:"<<EXTMembershipArr[4]<<" ] \n";
     printf("Extension of: %g \n", result);
-    *log << "Extension of: "<<TDAMembershipArr[0]<<"  \n";
+    *log << "Extension of: "<<result<<"  \n";
     return result;
 }
 
