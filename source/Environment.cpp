@@ -239,12 +239,12 @@ void Environment::draw() {
 bool Environment::touchDown(Agent *value) {
     if (value->goal->x == 99) {
         //goal is in east
-        if(value->start->x == 99) {
+        if(value->start->x >= 98) {
             return true;
         }
     } else if(value->goal->y == 0) {
         //goal is in south
-        if(value->start->y == 0) {
+        if(value->start->y <= 1) {
             return true;
         }
     }
@@ -280,6 +280,7 @@ void Environment::update() {
         list<Agent*>::iterator it = cars.begin();
         while(it != cars.end()) {
             if(touchDown(*it)) {
+                board.board[(*it)->start->x * BOARD_SIZE + (*it)->start->y] = 0;
                 it = cars.erase(it);
             } else {
                 it++;
@@ -291,12 +292,14 @@ void Environment::update() {
 			if (lightNS == 2) {
 				lightNS = 0;
 				lightWE = 2;
-				for (int i = 40; i < 60; i++) {
+				for (int i = 38; i <= 61; i++) {
 					board.board[(i * 100) + 60] = -1;
                     board.board[(i * 100) + 59] = -1;
+                    board.board[(i * 100) + 58] = -1;
                     
 					board.board[(40 * 100) + i] = 0;
                     board.board[(39 * 100) + i] = 0;
+                    board.board[(38 * 100) + i] = 0;
  
 				}
                 board.board[59 + 59] = 0;
@@ -308,12 +311,14 @@ void Environment::update() {
 			else if (lightWE == 2) {
 				lightNS = 2;
 				lightWE = 0;
-				for (int i = 40; i < 60; i++) {
+				for (int i = 38; i <= 61; i++) {
 					board.board[(40 * 100) + i] = -1;
                     board.board[(39 * 100) + i] = -1;
+                    board.board[(38 * 100) + i] = -1;
 
                     board.board[(i * 100) + 60] = 0;
                     board.board[(i * 100) + 59] = 0;
+                    board.board[(i * 100) + 58] = 0;
 				}
                 board.board[59 + 59] = -1;
                 board.board[60 + 59] = -1;
