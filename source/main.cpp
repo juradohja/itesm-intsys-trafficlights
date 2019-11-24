@@ -221,6 +221,7 @@ void changeAgent(unsigned char key, int x, int y) {
 		break;
 	}
 }
+
 int main(int argc, char* argv[])
 {
 	glutInit(&argc, argv);											// Init GLUT with command line parameters.

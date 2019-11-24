@@ -37,7 +37,7 @@ public:
 	Node * goal;
 	int size;
 
-	float cn, cd;
+	float cn, cd, isMoving;
 	
 	int curDirection;
     

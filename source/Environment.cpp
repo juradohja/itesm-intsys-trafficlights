@@ -280,7 +280,7 @@ void Environment::update() {
         list<Agent*>::iterator it = cars.begin();
         while(it != cars.end()) {
             if(touchDown(*it)) {
-                it = cars.erase(it);
+				delete *it;
             } else {
                 it++;
             }

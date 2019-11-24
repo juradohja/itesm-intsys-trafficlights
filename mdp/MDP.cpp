@@ -131,13 +131,13 @@ void MDP::doMDP(){
 	while(flag  && countConv < 5);
 }
 
-/*
+
 // just for code test
 
-int main() {
+int main2() {
 
 		
-	//OFITIAL FOR PROYECT
+	//OFICIAL FOR PROJECT
 	double rewards[BOARD_SIZE_X][BOARD_SIZE_Y];
 
 	for(int x = 1; x< BOARD_SIZE_X-1; x++) {
@@ -150,7 +150,7 @@ int main() {
 			} else if((x>= 47 && x <= 54) &&
 				(y>= 47 && y <= 54)) {
 				rewards[x][y] = WALL_REWARD; //wall glorieta -20.0f
-			} else if (x==100) { //x == 100 for east and y == 1 for south
+			} else if (y==1) { //x == 100 for east and y == 1 for south
 				rewards[x][y] = GOAL_REWARD; //goals 10.0f
 			} else if((x < 43 && y < 43) ||
 			(x >= 59 && y < 43) ||
@@ -224,11 +224,11 @@ int main() {
 
 	MDP * mdp = new MDP(rewards,GAMMA_VALUE);
 	mdp->doMDP();
-
+	/*
 	std::cout << "<--------------------FINAL OPTIMAL RULES---------------->" << endl;
 	for (int y = BOARD_SIZE_Y-2; y > 0; y--) {
 		for (int x = 1; x < BOARD_SIZE_X-1; x++) {
-			std::cout << mdp->optimalRules[x][y] << " ";
+			std::cout << mdp->doMDP[x][y] << " ";
 			if(x == 40 || x== 60) {
 				std::cout << "   ";
 			}
@@ -239,9 +239,38 @@ int main() {
 			std::cout << endl;
 		}
 	}
+	*/
+	
+
+
+	
+	std::cout << "<--------------------FINAL OPTIMAL RULES---------------->" << endl;
+	std::cout << "{";
+	for (int x = 1; x < BOARD_SIZE_X - 1; x++) {
+		std::cout << "{";
+		for (int y = 1; y < BOARD_SIZE_Y - 1; y++) {
+			std::cout << mdp->optimalRules[x][y];
+			if (y < BOARD_SIZE_Y - 2) {
+				std::cout << ",";
+			}
+			else {
+				std::cout << "}";
+			}
+		}
+		if (x < BOARD_SIZE_X - 2) {
+			std::cout << "," << endl;
+		}
+		else {
+			std::cout << "};" << endl;
+		}
+	}
+	
+	printf("");
+	return 0;
 }
 
-*/
+
+
 
 
 

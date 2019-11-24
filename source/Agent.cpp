@@ -8,12 +8,10 @@ Agent::Agent(Board * b, int st, int gl, int sz) {
 	start = new Node(st / size, st % size, 0, NULL);
 	goal = new Node(gl / size, gl % size, 0, NULL);
 
-	//missing logic for setting the direction
-
 	cn = 1.0f;
 	cd = 1.414f;
 	
-    
+	isMoving = true;
 }
 
 Agent::~Agent() {
@@ -41,6 +39,7 @@ Node * Agent::nextMove() {
     if(goal->x == 99) {
         //goal in east
         nextMoveVal = board->rewardToEast[start->x][start->y];
+		printf("MDP x: %d, y: %d, dir : %d\n", start->x, start->y, nextMoveVal);
     } else if(goal->y == 0) {
         //goal in south
         nextMoveVal = board->rewardToSouth[start->x][start->y];
@@ -58,7 +57,7 @@ Node * Agent::getNextPossibleNode(int moveInt) {
         case 0:
             resultNode = this->start;
             break;
-        case 1:
+        case 3:
             if (start->y < BOARD_SIZE && (board->board[(start->x) * BOARD_SIZE + (start->y + 1)] == 0)){
                 resultNode = new Node(start->x, start->y+1, 0, start);
             } else if ((start->x-1 >= 0 && start->y + 1 < BOARD_SIZE) && (board->board[(start->x - 1) * BOARD_SIZE + (start->y + 1)] == 0)) {
@@ -69,7 +68,7 @@ Node * Agent::getNextPossibleNode(int moveInt) {
                 resultNode = this->start;
             }
             break;
-        case 2:
+        case 4:
             if ((start->x-1 >= 0 && start->y + 1 < BOARD_SIZE) && (board->board[(start->x - 1) * BOARD_SIZE + (start->y + 1)] == 0)) {
                 resultNode = new Node(start->x - 1, start->y + 1, 0, start);
             } else if(start->y < BOARD_SIZE && (board->board[(start->x) * BOARD_SIZE + (start->y + 1)] == 0)){
@@ -80,7 +79,7 @@ Node * Agent::getNextPossibleNode(int moveInt) {
                 resultNode = this->start;
             }
             break;
-        case 3:
+        case 5:
             if (start->x - 1 >= 0  && (board->board[(start->x - 1) * BOARD_SIZE + (start->y)] == 0)){
                 resultNode = new Node(start->x - 1, start->y, 0, start);
             } else if ((start->x-1 >= 0 && start->y + 1 < BOARD_SIZE) && (board->board[(start->x - 1) * BOARD_SIZE + (start->y + 1)] == 0)) {
@@ -91,7 +90,7 @@ Node * Agent::getNextPossibleNode(int moveInt) {
                 resultNode = this->start;
             }
             break;
-        case 4:
+        case 6:
             if((start->x -1 >= 0 && start->y - 1 >= 0) && (board->board[(start->x - 1) * BOARD_SIZE + (start->y - 1)] == 0)){
                 resultNode = new Node(start->x - 1, start->y - 1, 0, start);
             } else if (start->x - 1 >= 0  && (board->board[(start->x - 1) * BOARD_SIZE + (start->y)] == 0)){
@@ -102,7 +101,7 @@ Node * Agent::getNextPossibleNode(int moveInt) {
                 resultNode = this->start;
             }
             break;
-        case 5:
+        case 7:
             if (start->y - 1 >=0 && (board->board[(start->x) * BOARD_SIZE + (start->y - 1)] == 0)){
                 resultNode = new Node(start->x, start->y - 1, 0, start);
             } else if((start->x -1 >= 0 && start->y - 1 >= 0) && (board->board[(start->x - 1) * BOARD_SIZE + (start->y - 1)] == 0)){
@@ -113,7 +112,7 @@ Node * Agent::getNextPossibleNode(int moveInt) {
                 resultNode = this->start;
             }
             break;
-        case 6:
+        case 8:
             if ((start->x + 1 < BOARD_SIZE && start->y - 1 >= 0) &&(board->board[(start->x + 1) * BOARD_SIZE + (start->y - 1)] == 0)){
                 resultNode = new Node(start->x + 1, start->y - 1, 0, start);
             } else if (start->y - 1 >=0 && (board->board[(start->x) * BOARD_SIZE + (start->y - 1)] == 0)){
@@ -124,7 +123,7 @@ Node * Agent::getNextPossibleNode(int moveInt) {
                 resultNode = this->start;
             }
             break;
-        case 7:
+        case 1:
             if (start->x + 1 <BOARD_SIZE &&(board->board[(start->x + 1) * BOARD_SIZE + (start->y)] == 0)){
                 resultNode = new Node(start->x + 1, start->y, 0, start);
             } else if ((start->x + 1 < BOARD_SIZE && start->y - 1 >= 0) &&(board->board[(start->x + 1) * BOARD_SIZE + (start->y - 1)] == 0)){
@@ -135,7 +134,7 @@ Node * Agent::getNextPossibleNode(int moveInt) {
                 resultNode = this->start;
             }
             break;
-        case 8:
+        case 2:
             if ((start->x+1 <BOARD_SIZE && start->y + 1 <BOARD_SIZE) && (board->board[(start->x + 1) * BOARD_SIZE + (start->y + 1)] == 0)){
                 resultNode = new Node(start->x + 1, start->y + 1, 0, start);
             } else if (start->x + 1 <BOARD_SIZE &&(board->board[(start->x + 1) * BOARD_SIZE + (start->y)] == 0)){
@@ -156,6 +155,10 @@ Node * Agent::getNextPossibleNode(int moveInt) {
 void Agent::updateDirection(Node * newSt) {
 	int dispX = newSt->x - start->x;
     int dispY = newSt->y - start->y;
+	if (dispX == 0 && dispY == 0) {
+		isMoving = false;
+	}
+	else { isMoving = true; }
     if (dispX == 0 && dispY == 1) {
         curDirection = 0;    // NORTH
     }
@@ -179,8 +182,6 @@ void Agent::updateDirection(Node * newSt) {
     }
     else if (dispX == -1 && dispY == 1) {
         curDirection = 7;    // NORTH-WEST
-    } else if (dispX == 0 && dispY == 0) {
-        curDirection = 8;
     }
 }
 
@@ -189,7 +190,7 @@ void Agent::draw() {
 		glTranslatef(-50, -50, 0);
 		glTranslatef(start->x + 0.5, start->y + 0.5, 0.003);
 		glRotatef(-45 * curDirection, 0, 0, 1);
-        if(curDirection == 8) {
+        if(!isMoving) {
             glColor3f(1.0, 0.4, 0.2);
         } else {
             glColor3f(0, 0.5, 1.0);
