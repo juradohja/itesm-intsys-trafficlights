@@ -53,7 +53,7 @@ long timebase;
 float fps;
 char bufferFPS[11];
 
-void displayText(int x, int y, char* txt);
+void displayText(int x, int y, vector<char> txt);
 
 void printBoard() {
 	for (int i = 0; i < 50; i++) {
@@ -201,58 +201,42 @@ void display()							// Called for each frame (about 60 times per second).
 		break;
 	}
 	*/
-    displayText(30,50,bufferFPS);
     
     string remainingTime = " Remaining Semaphore Time: "+to_string(env.timeLeft);
-    int num1 = remainingTime.size()+1;
-    char remainingTimeChar[num1];
-    remainingTime.copy(remainingTimeChar, remainingTime.size()+1);
-    remainingTimeChar[remainingTime.size()] = '\0';
-    displayText(30,70, remainingTimeChar);
+    vector<char> vremainingTime(remainingTime.begin(), remainingTime.end());
+    displayText(30,70, vremainingTime);
     
-    string tda = env.fuzzlogic.TDAarr;
-    int num2 = tda.size()+1;
-    char tdaChar[num2];
-    tda.copy(tdaChar,tda.size()+1);
-    tdaChar[tda.size()] = '\0';
-    displayText(30,90,tdaChar);
+    string tda = " "+env.fuzzlogic.TDAarr;
+    vector<char> vtda(tda.begin(), tda.end());
+    displayText(30,90,vtda);
     
-    string tdna = env.fuzzlogic.TDNAarr;
-    int num3 = tdna.size()+1;
-    char tdnaChar[num3];
-    tdna.copy(tdnaChar,tdna.size()+1);
-    tdnaChar[tdna.size()] = '\0';
-    displayText(30,110,tdnaChar);
+    string tdna = " "+env.fuzzlogic.TDNAarr;
+    vector<char> vtdna(tdna.begin(), tdna.end());
+    displayText(30,110,vtdna);
     
-    string ext = env.fuzzlogic.EXTarr;
-    int num4 = ext.size()+1;
-    char extChar[num4];
-    ext.copy(extChar,ext.size()+1);
-    extChar[ext.size()] = '\0';
-    displayText(30,130,extChar);
+    string ext = " "+env.fuzzlogic.EXTarr;
+    vector<char> vext(ext.begin(), ext.end());
+    displayText(30,130,vext);
     
     string tdn = " #cars in N: "+to_string(env.carNumN)+" TDN: "+ to_string(env.densN);
-    int num5 = tdn.size()+1;
-    char tdnChar[num5];
-    tdn.copy(tdnChar,tdn.size()+1);
-    tdnChar[tdn.size()] = '\0';
-    displayText(30,150,tdnChar);
+    vector<char> vtdn(tdn.begin(), tdn.end());
+    displayText(30,150,vtdn);
     
     string tde = " #cars in W: "+to_string(env.carNumW)+" TDW: "+ to_string(env.densW);
-    int num6 = tde.size()+1;
-    char tdeChar[num6];
-    tde.copy(tdeChar,tde.size()+1);
-    tdeChar[tde.size()] = '\0';
-    displayText(30,170,tdeChar);
+    vector<char> vtde(tde.begin(), tde.end());
+    displayText(30,170,vtde);
     
     string tc = " Total car #: "+ to_string(env.cars.size());
-    int num7 = tc.size()+1;
-    char tcChar[num7];
-    tc.copy(tcChar,tc.size()+1);
-    tcChar[tc.size()] = '\0';
-    displayText(30,190,tcChar);
-    displayText(30,210," Iterations for MDP-SouthAsGoal: 350");
-    displayText(30,230," Iterations for MDP-EastAsGoal: 332");
+    vector<char> vtc(tc.begin(), tc.end());
+    displayText(30,190,vtc);
+    
+    string tis = " Iterations for MDP-SouthAsGoal: 350";
+    vector<char> vtis(tis.begin(), tis.end());
+    displayText(30,210,vtis);
+    
+    string tie = " Iterations for MDP-EastAsGoal: 332";
+    vector<char> vtie(tie.begin(), tie.end());
+    displayText(30,230,vtie);
 	env.draw();
 	glutSwapBuffers();												// Swap the hidden and visible buffers.
 }
@@ -313,7 +297,7 @@ int main(int argc, char* argv[])
 	return 0;														// ANSI C requires a return value.
 }
 
-void displayText( int x, int y, char* txt )
+void displayText( int x, int y, vector<char> txt )
 {
     GLboolean lighting;
     GLint viewportCoords[4];
@@ -332,10 +316,11 @@ void displayText( int x, int y, char* txt )
         glPushMatrix();
             glLoadIdentity();
             glRasterPos2i( x, viewportCoords[3] - y );
-            while( *txt )
+            
+            for(const char &c: txt )
             {
-                glutBitmapCharacter( GLUT_BITMAP_HELVETICA_18, *txt );
-                txt++;
+                glutBitmapCharacter( GLUT_BITMAP_HELVETICA_18, c );
+                
             }
         glPopMatrix();
         glMatrixMode( GL_PROJECTION );
