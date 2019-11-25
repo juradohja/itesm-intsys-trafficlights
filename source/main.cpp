@@ -202,42 +202,52 @@ void display()							// Called for each frame (about 60 times per second).
 	}
 	*/
     displayText(30,50,bufferFPS);
+    
     string remainingTime = " Remaining Semaphore Time: "+to_string(env.timeLeft);
-    char remainingTimeChar[remainingTime.size()+1];
+    int num1 = remainingTime.size()+1;
+    char remainingTimeChar[num1];
     remainingTime.copy(remainingTimeChar, remainingTime.size()+1);
     remainingTimeChar[remainingTime.size()] = '\0';
     displayText(30,70, remainingTimeChar);
     
     string tda = env.fuzzlogic.TDAarr;
-    char tdaChar[tda.size()+1];
+    int num2 = tda.size()+1;
+    char tdaChar[num2];
     tda.copy(tdaChar,tda.size()+1);
     tdaChar[tda.size()] = '\0';
     displayText(30,90,tdaChar);
     
     string tdna = env.fuzzlogic.TDNAarr;
-    char tdnaChar[tdna.size()+1];
+    int num3 = tdna.size()+1;
+    char tdnaChar[num3];
     tdna.copy(tdnaChar,tdna.size()+1);
     tdnaChar[tdna.size()] = '\0';
     displayText(30,110,tdnaChar);
     
     string ext = env.fuzzlogic.EXTarr;
-    char extChar[ext.size()+1];
+    int num4 = ext.size()+1;
+    char extChar[num4];
     ext.copy(extChar,ext.size()+1);
     extChar[ext.size()] = '\0';
     displayText(30,130,extChar);
     
     string tdn = " #cars in N: "+to_string(env.carNumN)+" TDN: "+ to_string(env.densN);
-    char tdnChar[tdn.size()+1];
+    int num5 = tdn.size()+1;
+    char tdnChar[num5];
     tdn.copy(tdnChar,tdn.size()+1);
     tdnChar[tdn.size()] = '\0';
     displayText(30,150,tdnChar);
+    
     string tde = " #cars in W: "+to_string(env.carNumW)+" TDW: "+ to_string(env.densW);
-    char tdeChar[tde.size()+1];
+    int num6 = tde.size()+1;
+    char tdeChar[num6];
     tde.copy(tdeChar,tde.size()+1);
     tdeChar[tde.size()] = '\0';
     displayText(30,170,tdeChar);
+    
     string tc = " Total car #: "+ to_string(env.cars.size());
-    char tcChar[tc.size()+1];
+    int num7 = tc.size()+1;
+    char tcChar[num7];
     tc.copy(tcChar,tc.size()+1);
     tcChar[tc.size()] = '\0';
     displayText(30,190,tcChar);
