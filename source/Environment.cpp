@@ -295,44 +295,40 @@ void Environment::update() {
 				lightNS = 0;
 				lightWE = 2;
 				for (int i = 40; i < 60; i++) {
-                    board.board[(i * 100) + 61] = -2;
+                    //board.board[(i * 100) + 61] = -2;
 					board.board[(i * 100) + 60] = -2;
-                    board.board[(i * 100) + 59] = -2;
+                    //board.board[(i * 100) + 59] = -2;
 				}
                 
                 for (int i = 40; i < 60; i++) {
-                    board.board[(40 * 100) + i] = 0;
+                    //board.board[(40 * 100) + i] = 0;
                     board.board[(39 * 100) + i] = 0;
-                    board.board[(38 * 100) + i] = 0;
+                    //board.board[(38 * 100) + i] = 0;
                 }
-                board.board[59 + 59] = 0;
-                board.board[60 + 59] = 0;
-                //board.board[61 + 59] = 0;
-                
-                //board.board[40 + 38] = -2;
-                board.board[40 + 39] = -2;
-                board.board[40 + 40] = -2;
+                //board.board[59 + 59] = 0;
+                //board.board[60 + 59] = 0;
+
+                //board.board[40 + 39] = -2;
+                //board.board[40 + 40] = -2;
 			}
 			else if (lightWE == 2) {
 				lightNS = 2;
 				lightWE = 0;
 				for (int i = 40; i < 60; i++) {
-					board.board[(40 * 100) + i] = -2;
+					//board.board[(40 * 100) + i] = -2;
                     board.board[(39 * 100) + i] = -2;
-                    board.board[(38 * 100) + i] = -2;
+                    //board.board[(38 * 100) + i] = -2;
 				}
                 for (int i = 40; i < 60; i++) {
-                    board.board[(i * 100) + 61] = 0;
+                    //board.board[(i * 100) + 61] = 0;
                     board.board[(i * 100) + 60] = 0;
-                    board.board[(i * 100) + 59] = 0;
+                    //board.board[(i * 100) + 59] = 0;
                 }
-                board.board[59 + 59] = -2;
-                board.board[60 + 59] = -2;
-                //board.board[61 + 59] = -2;
+                //board.board[59 + 59] = -2;
+                //board.board[60 + 59] = -2;
                 
-                //board.board[40 + 38] = 0;
-                board.board[40 + 39] = 0;
-                board.board[40 + 40] = 0;
+                //board.board[40 + 39] = 0;
+                //board.board[40 + 40] = 0;
                 
 			}
 			timeLeft = LIGHTBASETIME;
