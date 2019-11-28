@@ -28,7 +28,16 @@ Node * Agent::move(Board * b) {
     
 	if (newStart != NULL) {
 		updateDirection(newStart);
-		b->board[(start->x * BOARD_SIZE) + start->y] = 0;
+        if(b->board[(start->x * BOARD_SIZE) + start->y] == -2) {
+            b->board[(start->x * BOARD_SIZE) + start->y] = -2;
+        } else if(b->board[(start->x * BOARD_SIZE) + start->y] == 1) {
+            b->board[(start->x * BOARD_SIZE) + start->y] = 0;
+        } else if (start->x == newStart->x && start->y == newStart->y) {
+            b->board[(start->x * BOARD_SIZE) + start->y] = 1;
+        } else {
+            b->board[(start->x * BOARD_SIZE) + start->y] = 0;
+        }
+        
 		b->board[(newStart->x * BOARD_SIZE) + newStart->y] = 1;
 		newStart->parent = NULL;
         printf("Current start x: %d y: %d , goal x: %d, y: %d \nNew updated Start: nx: %d, ny: %d \n", start->x, start->y, goal->x, goal->y, newStart->x, newStart->y);
@@ -57,6 +66,10 @@ Node * Agent::nextMove() {
 
 Node * Agent::getNextPossibleNode(int moveInt) {
     Node * resultNode;
+    if(board->board[(start->x) * BOARD_SIZE + (start->y)] == -2){
+        resultNode = this->start;
+        return resultNode;
+    }
     switch (moveInt) {
         case 0:
             resultNode = this->start;
