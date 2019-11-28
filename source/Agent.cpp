@@ -66,7 +66,7 @@ Node * Agent::nextMove() {
 
 Node * Agent::getNextPossibleNode(int moveInt) {
     Node * resultNode;
-    if(board->board[(start->x) * BOARD_SIZE + (start->y)] == -2){
+    if( (board->board[(start->x) * BOARD_SIZE + (start->y)] == -2) || (board->board[(start->x+1) * BOARD_SIZE + (start->y)] == -2) || (board->board[(start->x+1) * BOARD_SIZE + (start->y+1)] == -2) || (board->board[(start->x) * BOARD_SIZE + (start->y+1)] == -2) || (board->board[(start->x-1) * BOARD_SIZE + (start->y)] == -2) || (board->board[(start->x) * BOARD_SIZE + (start->y-1)] == -2) || (board->board[(start->x-1) * BOARD_SIZE + (start->y-1)] == -2) || (board->board[(start->x+1) * BOARD_SIZE + (start->y-1)] == -2) || (board->board[(start->x-1) * BOARD_SIZE + (start->y+1)] == -2)){
         resultNode = this->start;
         return resultNode;
     }
