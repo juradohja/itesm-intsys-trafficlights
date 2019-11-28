@@ -70,9 +70,11 @@ Node * Agent::nextMove() {
 
 Node * Agent::getNextPossibleNode(int moveInt) {
     Node * resultNode;
-    if( (board->board[(start->x) * BOARD_SIZE + (start->y)] == -2) || (board->board[(start->x+1) * BOARD_SIZE + (start->y)] == -2) || (board->board[(start->x+1) * BOARD_SIZE + (start->y+1)] == -2) || (board->board[(start->x) * BOARD_SIZE + (start->y+1)] == -2) || (board->board[(start->x-1) * BOARD_SIZE + (start->y)] == -2) || (board->board[(start->x) * BOARD_SIZE + (start->y-1)] == -2) || (board->board[(start->x-1) * BOARD_SIZE + (start->y-1)] == -2) || (board->board[(start->x+1) * BOARD_SIZE + (start->y-1)] == -2) || (board->board[(start->x-1) * BOARD_SIZE + (start->y+1)] == -2)){
-        resultNode = this->start;
-        return resultNode;
+    if((start->x<40 || start->y>60)) {
+        if((board->board[(start->x) * BOARD_SIZE + (start->y)] == -2) || (board->board[(start->x+1) * BOARD_SIZE + (start->y)] == -2) || (board->board[(start->x+1) * BOARD_SIZE + (start->y+1)] == -2) || (board->board[(start->x) * BOARD_SIZE + (start->y+1)] == -2) || (board->board[(start->x-1) * BOARD_SIZE + (start->y)] == -2) || (board->board[(start->x) * BOARD_SIZE + (start->y-1)] == -2) || (board->board[(start->x-1) * BOARD_SIZE + (start->y-1)] == -2) || (board->board[(start->x+1) * BOARD_SIZE + (start->y-1)] == -2) || (board->board[(start->x-1) * BOARD_SIZE + (start->y+1)] == -2)){
+            resultNode = this->start;
+            return resultNode;
+        }
     }
     switch (moveInt) {
         case 0:
