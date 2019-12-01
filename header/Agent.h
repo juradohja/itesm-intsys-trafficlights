@@ -48,7 +48,7 @@ public:
     
     Node * getNextPossibleNode(int moveInt);
     Node * nextMove();
-	Node * move(Board * b);
+	Node * move(Board * b, int lightNS);
 	void updateDirection(Node * newSt);
 	void draw();
 

@@ -1,7 +1,7 @@
 /*
  * A01336424 | Kai Kawasaki Ueda
  * A01336435 | Sergio Ugalde Marcano
- * A01336656 | Jos� Alberto Jurado Hern�ndez
+ * A01336656 | José Alberto Jurado Hernández
  *
  * TC2011. Intelligent Systems Course.
  */
@@ -56,71 +56,15 @@ char bufferFPS[11];
 void displayText(int x, int y, vector<char> txt);
 
 void printBoard() {
-	for (int i = 0; i < 50; i++) {
-		for (int j = 0; j < 50; j++) {
-			printf("%d ", b.board[(i*50)+j]);
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < 100; j++) {
+			printf("%d ", b.board[(i*100)+j]);
 		}
 		printf("\n");
 	}
 	printf("\n");
 }
-/*
-void printPath(Node * head) {
-	Node * cur = head;
-	while (cur != NULL) {
-		printf("(%d, %d)\n", cur->x, cur->y);
-		cur = cur->parent;
-	}
-}
 
-void drawBoard(Board * b) {
-	glColor3f(0.4, 0.4, 0.4);
-	glBegin(GL_QUADS); {
-		glVertex3f(0, 0, -0.002);
-		glVertex3f(0, 50, -0.002);
-		glVertex3f(50, 50, -0.002);
-		glVertex3f(50, 0, -0.002);
-	} glEnd();
-
-	glColor3f(0.15, 0.15, 0.15);
-	glBegin(GL_QUADS); {
-		for (int i = 0; i < 2500; i++) {
-			if (b->board[i] == -1) {
-				glVertex3f((i / 50), (i % 50), 0.001);
-				glVertex3f((i / 50), (i % 50) + 1, 0.001);
-				glVertex3f((i / 50) + 1, (i % 50) + 1, 0.001);
-				glVertex3f((i / 50) + 1, (i % 50), 0.001);
-			}
-		}
-	} glEnd();
-
-	glLineWidth(1.0);
-	glBegin(GL_LINES);
-	{
-		glColor3f(1, 1, 1);
-		for (int i = 0; i <= 50; i++) {
-			glVertex3f(0, i, 0);
-			glVertex3f(50, i, 0);
-		}
-		for (int i = 0; i <= 50; i++) {
-			glVertex3f(i, 0, 0);
-			glVertex3f(i, 50, 0);
-		}
-	} glEnd();
-}
-
-void drawPath(Node * head, float r, float g, float b) {
-	Node * cur = head;
-	glColor3f(r, g, b);
-	while (cur != NULL) {
-		glPushMatrix(); {
-			glTranslatef(cur->x + 0.5, cur->y + 0.5, 0.01);
-			glutSolidSphere(0.3, 20, 20);
-		} glPopMatrix();
-		cur = cur->parent;
-	}
-}
-*/
 void init() // FOR GLUT LOOP
 {
 	glEnable(GL_DEPTH_TEST);			// Enable check for close and far objects.
@@ -133,50 +77,17 @@ void init() // FOR GLUT LOOP
     fps = 0.0f;
     
 	b = Board();
-	// printBoard();
+	printBoard();
 
 
-    printf("akjhfjk sdhfjkhdjsfhjkds hfklj dsah");
+   // printf("akjhfjk sdhfjkhdjsfhjkds hfklj dsah");
     myfile.open("log1.txt");
     env = Environment();
     myfile << "Please writr this text to a file.\n this text is written using C++\n";
     myfile << "Writing\n";
     env.log = &myfile;
-    printf("akjhfjk sdhfjkhdjsfhjkds hfklj dsah");
-    
-    /*
-	int redStart;
-	do {
-		redStart = rand() % 50;
-	} while (b.board[redStart] == -1);
+  //  printf("akjhfjk sdhfjkhdjsfhjkds hfklj dsah");
 
-	int greenStart;
-	do {
-		greenStart = rand() % 50;
-	} while (b.board[greenStart] == -1 || greenStart == redStart);
-
-	int blueStart;
-	do {
-		blueStart = rand() % 50;
-	} while (b.board[blueStart] == -1 || blueStart == redStart || blueStart == greenStart);
-
-	int goal;
-	do {
-		goal = 2450 + (rand() % 50);
-	} while (b.board[goal] == -1);
-
-	red = new Agent(&b, redStart, goal, 50);
-	green = new Agent(&b, greenStart, goal, 50);
-	blue = new Agent(&b, blueStart, goal, 50);
-
-	redList = red->aStar();
-	greenList = green->aStar();
-	blueList = blue->aStar();
-
-	activeAgent = 1;
-     */
-
-	// printPath(redList);
 }
 
 void display()							// Called for each frame (about 60 times per second).
@@ -184,23 +95,9 @@ void display()							// Called for each frame (about 60 times per second).
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);				// Clear color and depth buffers.
 	glLoadIdentity();												// Reset 3D view matrix.
-	gluLookAt(0.0, 0.0, 140.0,										// Where the camera is.
-		      0.0, 0.0, 0.0,										// To where the camera points at.
+	gluLookAt(-30.0, 0.0, 140.0,										// Where the camera is.
+		      -30.0, 0.0, 0.0,										// To where the camera points at.
 		      0.0, 1.0, 0.0);										// "UP" vector.
-	/*
-	drawBoard(&b);
-	switch (activeAgent) {
-	case 1:
-		drawPath(redList, 1, 0, 0);
-		break;
-	case 2:
-		drawPath(greenList, 0, 1, 0);
-		break;
-	case 3:
-		drawPath(blueList, 0, 0, 1);
-		break;
-	}
-	*/
     
     string remainingTime = " Remaining Semaphore Time: "+to_string(env.timeLeft);
     vector<char> vremainingTime(remainingTime.begin(), remainingTime.end());
@@ -284,7 +181,7 @@ int main(int argc, char* argv[])
 {
 	glutInit(&argc, argv);											// Init GLUT with command line parameters.
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);		// Use 2 buffers (hidden and visible). Use the depth buffer. Use 3 color channels.
-	glutInitWindowSize(750, 750);
+	glutInitWindowSize(1300, 750);
 	glutCreateWindow("CG first program");
 	
 	init();

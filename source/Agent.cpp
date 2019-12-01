@@ -19,7 +19,7 @@ Agent::~Agent() {
 	delete goal;
 }
 
-Node * Agent::move(Board * b) {
+Node * Agent::move(Board * b, int lightNS) {
 	board = b;
     Node * newStart;
     
@@ -28,6 +28,7 @@ Node * Agent::move(Board * b) {
     
 	if (newStart != NULL) {
 		updateDirection(newStart);
+<<<<<<< Updated upstream
         if (start->x == newStart->x && start->y == newStart->y) {
             if (board->board[(start->x) * BOARD_SIZE + (start->y)] == -2) {
                 b->board[(start->x * BOARD_SIZE) + start->y] = -2;
@@ -43,8 +44,24 @@ Node * Agent::move(Board * b) {
         
         
         
+=======
+		if ((lightNS == 2 &&
+			(start->x >= 39 && start->x <= 41) &&
+			(start->y >= 38 && start->y <= 61)) || (
+				
+			lightNS == 0 &&
+			(start->x >= 38 && start->x <= 61) &&
+			(start->y >= 58 && start->y <= 60))) {
+
+			b->board[(start->x * BOARD_SIZE) + start->y] = -1;
+		}
+		else {
+			b->board[(start->x * BOARD_SIZE) + start->y] = 0;
+		}
+		b->board[(newStart->x * BOARD_SIZE) + newStart->y] = 1;
+>>>>>>> Stashed changes
 		newStart->parent = NULL;
-        printf("Current start x: %d y: %d , goal x: %d, y: %d \nNew updated Start: nx: %d, ny: %d \n", start->x, start->y, goal->x, goal->y, newStart->x, newStart->y);
+    //    printf("Current start x: %d y: %d , goal x: %d, y: %d \nNew updated Start: nx: %d, ny: %d \n", start->x, start->y, goal->x, goal->y, newStart->x, newStart->y);
 		start = newStart;
 	}
 	return start;
@@ -56,7 +73,7 @@ Node * Agent::nextMove() {
     if(goal->x == 99) {
         //goal in east
         nextMoveVal = board->rewardToEast[start->x][start->y];
-		printf("MDP x: %d, y: %d, dir : %d\n", start->x, start->y, nextMoveVal);
+	//	printf("MDP x: %d, y: %d, dir : %d\n", start->x, start->y, nextMoveVal);
     } else if(goal->y == 0) {
         //goal in south
         nextMoveVal = board->rewardToSouth[start->x][start->y];

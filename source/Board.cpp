@@ -19,4 +19,17 @@ void Board::setWalls() {
 			board[i] = -1;
 		}
 	}
+
+	for (int y = 0; y < 5; y++) {
+		board[44 * BOARD_SIZE + y] = -1;
+		board[49 * BOARD_SIZE + y] = -1;
+		board[54 * BOARD_SIZE + y] = -1;
+	}
+
+	for (int x = 95; x < 100; x++) {
+		board[x * BOARD_SIZE + 44] = -1;
+		board[x * BOARD_SIZE + 49] = -1;
+		board[x * BOARD_SIZE + 54] = -1;
+	}
+
 }

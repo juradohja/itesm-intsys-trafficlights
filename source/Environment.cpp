@@ -24,18 +24,6 @@ Environment::~Environment() {
 }
 
 void Environment::drawStreetGrid() {
-    glBegin(GL_LINES);
-    {
-        glColor3f(1, 0, 0);
-        glVertex3f(0, 0, 0);
-        glVertex3f(20, 0, 0);
-
-        glColor3f(0, 1, 0);
-        glVertex3f(0, 0, 0);
-        glVertex3f(0, 20, 0);
-    }
-    glEnd();
-
 
     glColor3f(1, 1, 1);
     glBegin(GL_QUADS);
@@ -135,18 +123,18 @@ void Environment::drawStreetGrid() {
 
 		glVertex3f(-6, -50, -0.0005);
 		glVertex3f(-5, -50, -0.0005);
-		glVertex3f(-5, -46, -0.0005);
-		glVertex3f(-6, -46, -0.0005);
+		glVertex3f(-5, -45, -0.0005);
+		glVertex3f(-6, -45, -0.0005);
 
 		glVertex3f(-1, -50, -0.0005);
 		glVertex3f(0, -50, -0.0005);
-		glVertex3f(0, -46, -0.0005);
-		glVertex3f(-1, -46, -0.0005);
+		glVertex3f(0, -45, -0.0005);
+		glVertex3f(-1, -45, -0.0005);
 
 		glVertex3f(4, -50, -0.0005);
 		glVertex3f(5, -50, -0.0005);
-		glVertex3f(5, -46, -0.0005);
-		glVertex3f(4, -46, -0.0005);
+		glVertex3f(5, -45, -0.0005);
+		glVertex3f(4, -45, -0.0005);
 
 
 		glVertex3f(45, -5, -0.0005);
@@ -154,15 +142,15 @@ void Environment::drawStreetGrid() {
 		glVertex3f(50, -6, -0.0005);
 		glVertex3f(45, -6, -0.0005);
 
-		glVertex3f(45, 0, -0.0005);
+		glVertex3f(45, -1, -0.0005);
+		glVertex3f(50, -1, -0.0005);
 		glVertex3f(50, 0, -0.0005);
-		glVertex3f(50, 1, -0.0005);
-		glVertex3f(45, 1, -0.0005);
+		glVertex3f(45, 0, -0.0005);
 
-		glVertex3f(45, 5, -0.0005);
+		glVertex3f(45, 4, -0.0005);
+		glVertex3f(50, 4, -0.0005);
 		glVertex3f(50, 5, -0.0005);
-		glVertex3f(50, 6, -0.0005);
-		glVertex3f(45, 6, -0.0005);
+		glVertex3f(45, 5, -0.0005);
 	}
 	glEnd();
 
@@ -260,9 +248,10 @@ void Environment::update() {
         spawnCar();
         spawnCar();
         spawnCar();
+        spawnCar();
         activeTime++;
         timeLeft--;
-        printf("UPDATE FUNCTION CALLED \n");
+       // printf("UPDATE FUNCTION CALLED \n");
         *log << "UPDATE FUNCTION CALLED\n";
         frame = 0;
         // update functions
@@ -276,24 +265,35 @@ void Environment::update() {
             } else if (lightWE == 2) { // west is active, north is non-active
                 timeLeft += fuzzlogic.fuzzyfy(densW, densN,log);
             }
-            printf("FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g \n", densN, densW, timeLeft);
+           // printf("FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g \n", densN, densW, timeLeft);
             *log << "FUZZYFY CALLED with densN: %g, densW: %g, timeLeft: %g";
 		}
-        list<Agent*>::iterator it = cars.begin();
-        while(it != cars.end()) {
-            if(touchDown(*it)) {
-                board.board[(*it)->start->x * BOARD_SIZE + (*it)->start->y] = 0;
-                it = cars.erase(it);
-            } else {
-                it++;
-            }
-        }
+
+		//  printf("UPDATING CARS \n");
+		*log << "UPDATING CARS";
+		int counter = 0;
+		//for (Agent * car : cars) {
+		//    car->move(&board);
+		//    printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n", counter, car->start->x, car->start->y, car->goal->x, car->goal->y);
+		//    *log << "Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n";
+		//    counter++;
+		//}
+		list<Agent*>::reverse_iterator rit = cars.rbegin();
+		while (rit != cars.rend()) {
+			(*rit)->move(&board, lightNS);
+			//   printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n", counter, (*rit)->start->x, (*rit)->start->y, (*rit)->goal->x, (*rit)->goal->y);
+			*log << "Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n";
+			counter++;
+			++rit;
+		}
+
 		if (activeTime >= MAXEXTENSION || timeLeft <= 0) {
-            printf("<==========LIGHT CHANGE==========>\n");
+          //  printf("<==========LIGHT CHANGE==========>\n");
             *log << "<==========LIGHT CHANGE==========>\n";
 			if (lightNS == 2) {
 				lightNS = 0;
 				lightWE = 2;
+<<<<<<< Updated upstream
 				for (int i = 40; i < 60; i++) {
                     //board.board[(i * 100) + 61] = -2;
 					board.board[(i * 100) + 60] = -2;
@@ -310,10 +310,24 @@ void Environment::update() {
 
                 //board.board[40 + 39] = -2;
                 //board.board[40 + 40] = -2;
+=======
+				for (int i = 38; i <= 61; i++) {
+                    board.board[(i * 100) + 60] = -2;
+					board.board[(i * 100) + 59] = -2;
+                    board.board[(i * 100) + 58] = -2;
+				}
+                
+                for (int i = 40; i < 60; i++) {
+                    board.board[(41 * 100) + i] = 0;
+                    board.board[(40 * 100) + i] = 0;
+                    board.board[(39 * 100) + i] = 0;
+                }
+>>>>>>> Stashed changes
 			}
 			else if (lightWE == 2) {
 				lightNS = 2;
 				lightWE = 0;
+<<<<<<< Updated upstream
 				for (int i = 40; i < 60; i++) {
 					//board.board[(40 * 100) + i] = -2;
                     board.board[(39 * 100) + i] = -2;
@@ -330,28 +344,36 @@ void Environment::update() {
                 //board.board[40 + 39] = 0;
                 //board.board[40 + 40] = 0;
                 
+=======
+				for (int i = 38; i <= 61; i++) {
+					board.board[(41 * 100) + i] = -2;
+                    board.board[(40 * 100) + i] = -2;
+                    board.board[(39 * 100) + i] = -2;
+				}
+                for (int i = 40; i < 60; i++) {
+                    board.board[(i * 100) + 60] = 0;
+                    board.board[(i * 100) + 59] = 0;
+                    board.board[(i * 100) + 58] = 0;
+                }
+>>>>>>> Stashed changes
 			}
 			timeLeft = LIGHTBASETIME;
 			activeTime = 0;
 		}
+
+
+		list<Agent*>::iterator it = cars.begin();
+		while (it != cars.end()) {
+			if (touchDown(*it)) {
+				board.board[(*it)->start->x * BOARD_SIZE + (*it)->start->y] = 0;
+				it = cars.erase(it);
+			}
+			else {
+				it++;
+			}
+		}
         
-        printf("UPDATING CARS \n");
-        *log << "UPDATING CARS";
-        int counter = 0;
-        //for (Agent * car : cars) {
-        //    car->move(&board);
-        //    printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n", counter, car->start->x, car->start->y, car->goal->x, car->goal->y);
-        //    *log << "Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n";
-        //    counter++;
-        //}
-        list<Agent*>::reverse_iterator rit = cars.rbegin();
-        while(rit != cars.rend()) {
-            (*rit)->move(&board);
-            printf("Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n", counter, (*rit)->start->x, (*rit)->start->y, (*rit)->goal->x, (*rit)->goal->y);
-            *log << "Car # %d start: sx->%d sy->%d goal: gx->%d gy->%d \n\n";
-            counter++;
-            ++rit;
-        }
+
         
 	}
 	else {
@@ -393,7 +415,7 @@ void Environment::spawnCar() {
 
         counter++;
     }
-    printf("SPAWN CAR CALLED ADDED A CAR TO CARS LIST \n");
+    // printf("SPAWN CAR CALLED ADDED A CAR TO CARS LIST \n");
     *log << "SPAWN CAR CALLED ADDED A CAR TO CARS LIST \n";
     cars.push_back(newCar);
 }

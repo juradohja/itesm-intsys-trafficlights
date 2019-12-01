@@ -126,13 +126,13 @@ float FuzzyLogic::fuzzyfy(float tda, float tdna, ofstream *log) {
     TDNAarr = "TDNA [ LN: "+to_string(TDNAMembershipArr[0])+", LMN: "+to_string(TDNAMembershipArr[1])+", MN: "+to_string(TDNAMembershipArr[2])+", MHN: "+to_string(TDNAMembershipArr[3])+", HN: "+to_string(TDNAMembershipArr[4])+" ]";
     EXTarr = "EXT [ RM: "+to_string(EXTMembershipArr[0])+", RL: "+to_string(EXTMembershipArr[1])+", Z: "+to_string(EXTMembershipArr[2])+", L: "+to_string(EXTMembershipArr[3])+", M: "+to_string(EXTMembershipArr[4])+" ]";
     
-    printf("FUZZY SYS ARRS: \n TDA[LA: %g, LMA: %g, MA: %g, MHA: %g, HA:%g] \n",TDAMembershipArr[0],TDAMembershipArr[1],TDAMembershipArr[2],TDAMembershipArr[3],TDAMembershipArr[4]);
+   //  printf("FUZZY SYS ARRS: \n TDA[LA: %g, LMA: %g, MA: %g, MHA: %g, HA:%g] \n",TDAMembershipArr[0],TDAMembershipArr[1],TDAMembershipArr[2],TDAMembershipArr[3],TDAMembershipArr[4]);
    *log << "FUZZY SYS ARRS: TDA[LA: "<<TDAMembershipArr[0]<<" , LMA: "<<TDAMembershipArr[1]<<" , MA: "<<TDAMembershipArr[0]<<" , MHA: "<<TDAMembershipArr[0]<<" , HA:"<<TDAMembershipArr[0]<<" ]\n";
-    printf("TDNA[LN: %g, LMN: %g, MN: %g, MHN: %g, HN:%g] \n",TDNAMembershipArr[0],TDNAMembershipArr[1],TDNAMembershipArr[2],TDNAMembershipArr[3],TDNAMembershipArr[4]);
+   // printf("TDNA[LN: %g, LMN: %g, MN: %g, MHN: %g, HN:%g] \n",TDNAMembershipArr[0],TDNAMembershipArr[1],TDNAMembershipArr[2],TDNAMembershipArr[3],TDNAMembershipArr[4]);
     *log <<"TDNA[LN: "<<TDNAMembershipArr[0]<<" , LMN: "<<TDNAMembershipArr[1]<<" , MN: "<<TDNAMembershipArr[2]<<" , MHN: "<<TDNAMembershipArr[3]<<" , HN:"<<TDNAMembershipArr[4]<<" ] \n";
-    printf("EXT[RM: %g, RL: %g, Z: %g, L: %g, M:%g] \n", EXTMembershipArr[0],EXTMembershipArr[1],EXTMembershipArr[2],EXTMembershipArr[3],EXTMembershipArr[4]);
+   // printf("EXT[RM: %g, RL: %g, Z: %g, L: %g, M:%g] \n", EXTMembershipArr[0],EXTMembershipArr[1],EXTMembershipArr[2],EXTMembershipArr[3],EXTMembershipArr[4]);
     *log << "EXT[RM: "<<EXTMembershipArr[0]<<" , RL: "<<EXTMembershipArr[1]<<" , Z: "<<EXTMembershipArr[2]<<" , L: "<<EXTMembershipArr[3]<<" , M:"<<EXTMembershipArr[4]<<" ] \n";
-    printf("Extension of: %g \n", result);
+   // printf("Extension of: %g \n", result);
     *log << "Extension of: "<<result<<"  \n";
     return result;
 }
